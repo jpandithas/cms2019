@@ -6,8 +6,17 @@ function boot()
 {
     echo "Site booting..<br/>"; 
     
-    Autoload_Classes_Engines(); 
+    LoadSettings();
+    Autoload_Classes_Engines();
+     
+    echo CMS_BASE_URL; 
 }
+
+function LoadSettings()
+{
+    include_once("settings\settings.php");
+}
+
 
 /*
 * Autoloader Function for the Framework

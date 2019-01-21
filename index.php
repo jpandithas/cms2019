@@ -1,5 +1,5 @@
 <?php 
-include_once("includes\boostrap.php");
+include_once("includes\bootstrap.php");
 
 boot();
 ?>

@@ -14,7 +14,9 @@ function boot()
     //$db = new DB();
     //var_dump($db->GetDBConnection());
 
-    TestDB(); 
+    $db = new DB();
+
+    var_dump($db->GetDBError());  
 
     $url = new URL();
     echo $url->URLToString();

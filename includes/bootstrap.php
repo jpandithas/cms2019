@@ -1,7 +1,7 @@
 <?php
 /*
 *The main Boot function for the CMS
-*@returns Void
+*@returns: Void
 */
 function boot()
 {
@@ -16,7 +16,9 @@ function boot()
 
     $db = new DB();
 
-    var_dump($db->GetDBError());  
+    $data = $db->DBQPrepStatement("Select id, text1 from testtable where id = ?",array("1"),true);
+    var_dump($data); 
+
 
     $url = new URL();
     echo $url->URLToString();
@@ -27,20 +29,11 @@ function boot()
 /*
 * DB tester Function
 * This returns the state of the DB
+* REFACTOR
 */
 function TestDB()
 {
-    try
-    {
-      $db = new DB(); 
-    }
-    catch(PDOException $Exception)
-    {
-        print($Exception->getCode());
-        print("<br>FAIL");
-        return false; 
-    }
-    print("<br>PASS");
+   #TODO
 }
 
 /*

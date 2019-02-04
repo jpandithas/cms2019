@@ -2,10 +2,12 @@
 
 class Security
 {
-    /* Santitizes a string
-    * @input: String
-    * @returns: Mixed | Boolean for Fail, Stripped Text for Success
-    */
+    /**
+     * SanitizeString function
+     *
+     * @param [string] $string
+     * @return mixed 
+     */
     public static function SanitizeString($string)
     {
         if (empty($string) or (!is_string($string))) return false;

@@ -11,9 +11,6 @@ function boot()
     Autoload_Classes_Engines();
 
 
-    //$db = new DB();
-    //var_dump($db->GetDBConnection());
-
     $db = new DB();
 
     $data = $db->DBQPrepStatement("Select id, text1 from testtable where id = ?",array("1"),true);
@@ -36,20 +33,22 @@ function TestDB()
    #TODO
 }
 
-/*
-* Loader for the settings file
-*/
+/**
+ * Autoloader for the Settings
+ *
+ * @return void
+ */
 function LoadSettings()
 {
     include_once("settings\settings.php");
 }
 
 
-/*
-* Autoloader Function for the Framework
-*@input: none
-*@returns: none
-*/
+/**
+ * Autoloader Function for the Framework
+ *
+ * @return void
+ */
 function Autoload_Classes_Engines()
 {
     $path='includes\*\*.php';

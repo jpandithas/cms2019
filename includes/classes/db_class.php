@@ -49,7 +49,7 @@ class DB
     /**
      * GetDBConnection function
      *
-     * @return void
+     * @return [PDOStatement]|[false]
      */
     public function GetDBConnection()
     {
@@ -60,7 +60,7 @@ class DB
     /**
      * GetDBError function
      *
-     * @return string|false
+     * @return [string]|[false]
      */
     public function GetDBError ()
     {

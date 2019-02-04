@@ -13,9 +13,11 @@ function boot()
 
     $db = new DB();
 
-    $data = $db->DBQPrepStatement("Select id, text1 from testtable where id = ?",array("1"),true);
-    var_dump($data); 
+    $query = new Query($db);
 
+    $query->SetTable("testtable")->Insert()->InsertParams(Array("1","2","3","4"));
+    
+    var_dump($query->getSQL());
 
     $url = new URL();
     echo $url->URLToString();

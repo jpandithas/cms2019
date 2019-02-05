@@ -15,9 +15,16 @@ function boot()
 
     $query = new Query($db);
 
-    $query->SetTable("testtable")->Insert()->InsertParams(Array("1","2","3","4"));
+    $query->SetTable("testtable");
+    $query->Insert(Array("1","2","3","4"));
+    $query->UpdateByField(['tid','1'],['fields1'=>'value1','fields2'=>'value2']);
+    $query->DeleteByField(["tid"=>"1"]);
+    $query->Select(['id','text1'])->Where(['id','=',"1"]);
+    var_dump($query->GetAllRows());
     
-    var_dump($query->getSQL());
+    $query->GetSelect();
+    echo "<br/>";
+    $query->getSQL();
 
     $url = new URL();
     echo $url->URLToString();

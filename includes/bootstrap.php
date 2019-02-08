@@ -16,13 +16,10 @@ function boot()
     $query = new Query($db);
 
     $query->SetTableName("testtable");
-    $query->Insert(Array("1","2","3","4"));
-    $query->UpdateByField(['tid','1'],['fields1'=>'value1','fields2'=>'value2']);
-    $query->DeleteByField(["tid"=>"1"]);
-    $query->Select(['id','text1'])->Where(['id','>',"0"])->Limit(1,2);
-    var_dump($query->GetAllRows());
+    $query->Delete()->Where(['tid',">","1"])->AndClause(["sid",">","20"]);
+    $query->Limit(1);
     
-    $query->GetSelect();
+
     echo "<br/>";
     $query->getSQL();
 

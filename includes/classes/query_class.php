@@ -1,6 +1,9 @@
 <?php
 
-
+/**
+ * Query class
+ * PDO WRAPPER
+ */
 class Query
 {
 
@@ -11,10 +14,12 @@ class Query
      */
     protected $table;
     protected $db;
+    protected $dbo;
     protected $sql;
-    protected $select;
-    protected $where;
-    protected $select_params = array();
+    protected $params = array();
+    protected $errorCode;
+    protected $returned_rows;
+    protected $lastInsertId;
 
     public function __construct(DB $db)
     {
@@ -35,7 +40,7 @@ class Query
     }
 
     /**
-     * Undocumented function
+     * Insert function
      *
      * @param array $values
      * @return [integer] 
@@ -44,11 +49,15 @@ class Query
     {
     
         if (!is_array($values) or count($values)==0) return false;
-
+        $this->params = array();
         $size = count($values);
         $this->sql  = "INSERT INTO `".$this->table."` VALUES ";
         $this->sql.="(";
         
+        /**
+         * Can be done with:
+         * $this->sql .= "(".str_repeat("?,"$size-1)."?)";
+         */
         foreach ($values as $key=>$param) 
         {
             if ($key < ($size-1))
@@ -63,32 +72,22 @@ class Query
         }
         $this->sql.=")";
         $this->params = $values;
-        
-        $dbo = $this->db->GetDBConnection();        
-        $stmt = $dbo->prepare($this->sql);
-        $result = $stmt->execute($this->params);
-        
-        if ($result==false)
-        {
-            return $dbo->errorCode();
-        }
-        return $dbo->lastInsertID(); 
+        return $this;
     }
 
    /**
-    * UpdateById
+    * Update function
     *
-    * @param array $id_name_value
-    * @param array $fields_values
-    * @return void
+    * @param [array] $fields_values
+    * @return [Query]
     */
-   public function UpdateByField(array $id_name_value, array $fields_values)   
+   public function Update(array $fields_values)   
    {
-    if (!is_array($id_name_value) 
-    or count($id_name_value)==0 
-    or !is_array($fields_values) 
-    or count($fields_values)==0) return false;
-    $params = array();
+    if (!is_array($fields_values) 
+    or count($fields_values)==0) 
+    return false;
+
+    $this->params = array();
     $this->sql = "UPDATE `".$this->table."` SET ";
     $count = 0;
     foreach ($fields_values as $field => $value) 
@@ -99,45 +98,23 @@ class Query
            $this->sql .= ", ";
         }
         $count++;
-        array_push($params, $value);
+        array_push($this->params, $value);
     }
-    if (count($id_name_value)== 2)
-    {
-        $this->sql .= " WHERE $id_name_value[0] = ?";
-        array_push($params, $id_name_value[1]);
-    }
-    else
-    {
-        $keys = array_keys($id_name_value);
-        $this->sql .= " WHERE ".$keys[0]." = ?"; 
-        array_push($params,$id_name_value[$keys[0]]);
-    }
+    return $this;
    }
        
 
     /**
-     * DeleteById
+     * Delete function
      *
      * @param array $id_values
      * @return void
      */
-    public function DeleteByField(array $id_values)
+    public function Delete()
     {
-        if (!is_array($id_values) or count($id_values)==0) return false;
-        $params = array();
-
-        $this->sql = "DELETE FROM `".$this->table."` WHERE ";
-        if (count($id_values)==1)
-        {
-            $keys = array_keys($id_values);
-            $this->sql .= $keys[0]." = ? ";
-            array_push($params,$id_values[$keys[0]]);
-        }
-        else
-        {
-            $this->sql .= $id_values[0]." = ?";
-            array_push($params,$id_values[1]);
-        }
+        $this->params = array();
+        $this->sql = "DELETE FROM `".$this->table."` ";       
+        return $this;
     }
 
     /**
@@ -150,19 +127,20 @@ class Query
     public function Select(array $fields_array)
     {
         if (!is_array($fields_array) or count($fields_array)==0) return false;
-
-        $this->select = "SELECT ";
+        
+        $this->params = array();
+        $this->sql = "SELECT ";
         $count = 0;
         foreach ($fields_array as $field) 
         {
-            $this->select .= $field;
+            $this->sql .= $field;
             if ($count < count($fields_array)-1)
             {
-                $this->select .=",";
+                $this->sql .=",";
             }
             $count++;
         }
-        $this->select .=" FROM `".$this->table."` ";
+        $this->sql .=" FROM `".$this->table."` ";
         return $this;
     }
 
@@ -176,10 +154,11 @@ class Query
     public function Where(array $where_clause)
     {
         if (!is_array($where_clause) or count($where_clause)==0) return false;
-        if (count($where_clause) > 4 or count($where_clause) < 2) return false;
-        if (!isset($this->select)) return false;
-        $this->select .= "WHERE ".$where_clause[0]." ".$where_clause[1]." ?";
-        array_push($this->select_params, $where_clause[2]);
+        if (count($where_clause) != 3) return false;
+        if (!isset($this->sql)) return false;
+
+        $this->sql .= "WHERE ".$where_clause[0]." ".$where_clause[1]." ?";
+        array_push($this->params, $where_clause[2]);
         return $this;
     }
 
@@ -192,10 +171,10 @@ class Query
      */
     public function AndClause(array $clause)
     {
-        if (!is_array($clause) or count($clause) < 2) return false;
-        if (!isset($this->select)) return false;
-        $this->select .=" AND {$clause[0]} {$clause[1]} ?";
-        array_push($this->select_params,$clause[2]);
+        if (!is_array($clause) or count($clause) != 3) return false;
+        if (!isset($this->sql)) return false;
+        $this->sql .=" AND {$clause[0]} {$clause[1]} ?";
+        array_push($this->params,$clause[2]);
         return $this;
     }
 
@@ -207,13 +186,21 @@ class Query
      */
     public function OrClause(array $clause)
     {
-        if (!is_array($clause) or count($clause) < 2) return false;
-        if (!isset($this->select)) return false;
-        $this->select .=" OR {$clause[0]} {$clause[1]} ?";
-        array_push($this->select_params,$clause[2]);
+        if (!is_array($clause) or count($clause) != 3) return false;
+        if (!isset($this->sql)) return false;
+        $this->sql .=" OR {$clause[0]} {$clause[1]} ?";
+        array_push($this->params,$clause[2]);
         return $this;
     }
 
+    /**
+     * Limit() function
+     *
+     * @param [integer] $rows
+     * @param [integer] $offset
+     *
+     * @return [Query]
+     */
     public function Limit($rows, $offset=null)
     {
         if (empty($rows)) return false;
@@ -222,37 +209,77 @@ class Query
         if (!isset($this->table)) return false;
         if (!is_int($rows)) return false;
 
-        if (!isset($offset)) $this->select .= " LIMIT ".$rows;
-        if (isset($offset) and is_int($offset)) $this->select .= " LIMIT {$rows},{$offset}";
+        if (!isset($offset)) $this->sql .= " LIMIT ".$rows;
+        if (isset($offset) and is_int($offset)) $this->sql .= " LIMIT {$rows},{$offset}";
 
         return $this;
     }
 
     /**
-     * GetAllRows function
-     * Returns all rows from the Select query
-     * @return [array]
+     * SendQuery()
+     *
+     * @return [Query]
      */
-    public function GetAllRows()
+    public function SendQuery()
     {
         $dbo = $this->db->GetDBConnection();        
-        $stmt = $dbo->prepare($this->select);
-        $result = $stmt->execute($this->select_params);
+        $stmt = $dbo->prepare($this->sql);
+        $result = $stmt->execute($this->params);
         if ($result==false)
         {
-            return $dbo->errorCode();
+            $this->errorCode = $dbo->errorCode();
         }
-        return $stmt->FetchAll();
+        $this->returned_rows = $stmt->FetchAll();
+        $this->lastInsertId = $dbo->lastInsertId();
+        return $this;
     }
 
-    public function GetSelect()
+    /**
+     * Undocumented function
+     *
+     * @return [string] | [false]
+     */
+    public function GetErrorCode()
     {
-        var_dump($this->select_params);
-        echo $this->select;
+        if (!isset($this->errorCode))
+        {
+            return false;
+        }
+        return $this->errorCode;
     }
+    
+    /**
+     * GetLastInsertID function
+     *
+     * @return [integer]|[false]
+     */
+    public function GetLastInsertId()
+    {
+        if (!isset($this->lastInsertId))
+        {
+            return false;
+        }
+        return $this->lastInsertId;
+    }
+
+    /**
+     * GetRows function
+     *
+     * @return [array]|[false]
+     */
+    public function GetRows()
+    {
+        if (!isset($this->returned_rows))
+        {
+            return false;
+        }
+        return $this->returned_rows;
+    }
+
     public function getSQL()
     {
         echo $this->sql;
+        var_dump($this->params);
     }
 
 }

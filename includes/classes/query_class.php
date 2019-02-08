@@ -27,8 +27,9 @@ class Query
      * @param [string] $table_name
      * @return [Query]
      */
-    public function SetTable($table_name)
+    public function SetTableName($table_name)
     {
+        if (!is_string($table_name)) return false; 
         $this->table = $table_name;
         return $this;
     }
@@ -81,38 +82,38 @@ class Query
     * @param array $fields_values
     * @return void
     */
-   public function UpdateByField(array $id_name_value, array $fields_values)
+   public function UpdateByField(array $id_name_value, array $fields_values)   
    {
-        if (!is_array($id_name_value) 
-        or count($id_name_value)==0 
-        or !is_array($fields_values) 
-        or count($fields_values)==0) return false;
-        $params = array();
-        $this->sql = "UPDATE `".$this->table."` SET ";
-        $count = 0;
-        foreach ($fields_values as $field => $value) 
+    if (!is_array($id_name_value) 
+    or count($id_name_value)==0 
+    or !is_array($fields_values) 
+    or count($fields_values)==0) return false;
+    $params = array();
+    $this->sql = "UPDATE `".$this->table."` SET ";
+    $count = 0;
+    foreach ($fields_values as $field => $value) 
+    {
+        $this->sql .= "{$field} = ? ";
+        if ($count < (count($fields_values)-1))
         {
-            $this->sql .= "{$field} = ? ";
-            if ($count < (count($fields_values)-1))
-            {
-               $this->sql .= ", ";
-            }
-            $count++;
-            array_push($params, $value);
+           $this->sql .= ", ";
         }
-        if (count($id_name_value)== 2)
-        {
-            $this->sql .= " WHERE $id_name_value[0] = ?";
-            array_push($params, $id_name_value[1]);
-        }
-        else
-        {
-            $keys = array_keys($id_name_value);
-            $this->sql .= " WHERE ".$keys[0]." = ?"; 
-            array_push($params,$id_name_value[$keys[0]]);
-        }
-        
+        $count++;
+        array_push($params, $value);
     }
+    if (count($id_name_value)== 2)
+    {
+        $this->sql .= " WHERE $id_name_value[0] = ?";
+        array_push($params, $id_name_value[1]);
+    }
+    else
+    {
+        $keys = array_keys($id_name_value);
+        $this->sql .= " WHERE ".$keys[0]." = ?"; 
+        array_push($params,$id_name_value[$keys[0]]);
+    }
+   }
+       
 
     /**
      * DeleteById
@@ -210,6 +211,20 @@ class Query
         if (!isset($this->select)) return false;
         $this->select .=" OR {$clause[0]} {$clause[1]} ?";
         array_push($this->select_params,$clause[2]);
+        return $this;
+    }
+
+    public function Limit($rows, $offset=null)
+    {
+        if (empty($rows)) return false;
+        if (empty($rows) and empty($offset)) return false;
+        if (!isset($this->sql)) return false;
+        if (!isset($this->table)) return false;
+        if (!is_int($rows)) return false;
+
+        if (!isset($offset)) $this->select .= " LIMIT ".$rows;
+        if (isset($offset) and is_int($offset)) $this->select .= " LIMIT {$rows},{$offset}";
+
         return $this;
     }
 

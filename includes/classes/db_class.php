@@ -46,6 +46,7 @@ class DB
         $this->IsConnected = true; 
         return $this->DBConnection = $dbc;  
     }
+    
     /**
      * GetDBConnection function
      *

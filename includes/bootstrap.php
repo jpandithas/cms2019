@@ -15,11 +15,11 @@ function boot()
 
     $query = new Query($db);
 
-    $query->SetTable("testtable");
+    $query->SetTableName("testtable");
     $query->Insert(Array("1","2","3","4"));
     $query->UpdateByField(['tid','1'],['fields1'=>'value1','fields2'=>'value2']);
     $query->DeleteByField(["tid"=>"1"]);
-    $query->Select(['id','text1'])->Where(['id','=',"1"]);
+    $query->Select(['id','text1'])->Where(['id','>',"0"])->Limit(1,2);
     var_dump($query->GetAllRows());
     
     $query->GetSelect();

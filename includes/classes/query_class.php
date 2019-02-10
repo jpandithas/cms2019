@@ -74,7 +74,7 @@ class Query
         $this->params = $values;
         return $this;
     }
-
+    
    /**
     * Update function
     *

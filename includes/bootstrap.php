@@ -8,8 +8,8 @@ function boot()
     echo "Site booting..<br/>";
     
     LoadSettings();
-    Autoload_Classes_Engines();
-
+    spl_autoload_register('Autoload_Classes_Engines');
+ 
 
     $db = new DB();
 

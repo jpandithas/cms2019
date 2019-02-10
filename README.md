@@ -8,13 +8,14 @@ The idea behind this project is to create an easy to build CMS that is based on 
 Object Oriented PHP
 
 ## Features 
-The following features should be supported 
--[x] PHP OOP Framework
--[x] Boostraping capability 
--[ ] Router to support the Controller 
--[x] Database Connector Class 
--[x] Query ORM 
-  -[x] Insert 
+The following features should be supported:
+- [x] PHP OOP Framework
+- [x] Boostraping capability 
+- [ ] Router to support the Controller 
+- [x] Database Connector Class 
+- [x] Query ORM 
+- AS
+  - [x] Insert 
   - [x] Delete
   - [x] Update 
   - [x] Select 

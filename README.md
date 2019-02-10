@@ -12,9 +12,11 @@ The following features should be supported:
 - [x] PHP OOP Framework
 - [x] Boostraping capability 
 - [ ] Router to support the Controller 
+- [ ] Modular Design 
+- [ ] Themes 
 - [x] Database Connector Class 
 - [x] Query ORM 
-- AS
+- Queries:
   - [x] Insert 
   - [x] Delete
   - [x] Update 

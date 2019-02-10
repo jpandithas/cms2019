@@ -9,12 +9,12 @@ Object Oriented PHP
 
 ## Features 
 The following features should be supported 
-[x] PHP OOP Framework
-[x] Boostraping capability 
-[ ] Router to support the Controller 
-[x] Database Connector Class 
-[x] Query ORM 
-  - [x] Insert 
+-[x] PHP OOP Framework
+-[x] Boostraping capability 
+-[ ] Router to support the Controller 
+-[x] Database Connector Class 
+-[x] Query ORM 
+  -[x] Insert 
   - [x] Delete
   - [x] Update 
   - [x] Select 

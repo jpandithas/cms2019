@@ -10,17 +10,31 @@ function boot()
     LoadSettings();
     Autoload_Classes_Engines();
 
-    $db = new DB();
-
-    $query = new Query($db);
-
-    Router::Listen();
+    Listen();
 
     $url = new URL();
     echo $url->URLtoPath();
     var_dump($url->GetURLArray());
     echo $url->GetCurrentURI();
 }
+
+ /**
+     * Listens for a URL and Loads the module. Useful for bootstrapping
+     *
+     * @param [URL] $url
+     * @return void
+     */
+    function Listen(){
+        $mod_name = Router::ResolveModuleURL(new URL()); 
+        if ($mod_name == true){
+            Router::LoadModFromFiles($mod_name,false);    
+        }
+        else 
+        {
+            //has to be handled 
+            print("<h2> page not found </h2>");
+        }
+    }
 
 /*
 * DB tester Function

@@ -10,7 +10,16 @@ class Router
      * @return void
      */
     public static function Listen(){
-        self::LoadModFromFiles(self::ResolveModuleURL(new URL()),false);    
+        $mod_name = self::ResolveModuleURL(new URL()); 
+        if ($mod_name == true){
+            self::LoadModFromFiles($mod_name,false);    
+        }
+        else 
+        {
+            //has to be handled 
+            //print("<h2> page not found </h2>");
+            header("Location:".CMS_BASE_URL); 
+        }
     }
 
     /**
@@ -43,11 +52,11 @@ class Router
      * Resolves module from an Instance of the URL class
      *
      * @param [URL] $url
-     * @return void
+     * @return [string]|[false]
      */
     public static function ResolveModuleURL(URL $url){
         $url_array = $url->GetURLArray();
-        if (count($url_array)== 0) return false; 
+        if (count($url_array) == 0) return false; 
 
         $query = new Query(new DB()); 
         $query->SetTableName('routes');

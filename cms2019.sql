@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 01, 2019 at 07:05 PM
+-- Generation Time: Feb 15, 2019 at 06:57 PM
 -- Server version: 5.7.21
 -- PHP Version: 5.6.35
 
@@ -32,22 +32,23 @@ DROP TABLE IF EXISTS `routes`;
 CREATE TABLE IF NOT EXISTS `routes` (
   `routeid` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `id` tinyint(1) NOT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` tinyint(1) DEFAULT NULL,
   `mod_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `mod_desc` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL,
   `system` tinyint(1) NOT NULL,
   `userlevel` int(11) NOT NULL,
   PRIMARY KEY (`routeid`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `routes`
 --
 
 INSERT INTO `routes` (`routeid`, `action`, `type`, `id`, `mod_name`, `mod_desc`, `status`, `system`, `userlevel`) VALUES
-(1, 'add', 'user', 0, 'add_user', 'add users ', 1, 1, 0);
+(1, 'add', 'user', 0, 'add_user', 'add users ', 1, 1, 0),
+(2, 'login', NULL, 0, 'login', 'The login module of the CMS', 1, 1, 0);
 
 -- --------------------------------------------------------
 

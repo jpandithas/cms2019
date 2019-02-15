@@ -1,6 +1,6 @@
 <?php 
 
-function region_append()
+function theme_region_append()
 {
     return True;
 }

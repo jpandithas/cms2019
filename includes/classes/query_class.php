@@ -2,7 +2,7 @@
 
 /**
  * Query class
- * PDO WRAPPER
+ * PDO Wrapper that provides QoL for small/medium queries
  */
 class Query
 {
@@ -27,7 +27,7 @@ class Query
     }
     
     /**
-     * SetTable function
+     * Set the target table for the queries 
      *
      * @param [string] $table_name
      * @return [Query]
@@ -40,9 +40,9 @@ class Query
     }
 
     /**
-     * Insert function
+     * Insert SQL statement 
      *
-     * @param array $values
+     * @param [array] $values
      * @return [integer] 
      */
     public function Insert(array $values)
@@ -74,9 +74,9 @@ class Query
         $this->params = $values;
         return $this;
     }
-    
+
    /**
-    * Update function
+    * Update SQL statemet wrapper
     *
     * @param [array] $fields_values
     * @return [Query]
@@ -105,7 +105,7 @@ class Query
        
 
     /**
-     * Delete function
+     * Delete SQL statement 
      *
      * @param array $id_values
      * @return void
@@ -118,9 +118,9 @@ class Query
     }
 
     /**
-     * Select function
+     * Select SQL statement
      *
-     * @param array $fields_array
+     * @param [array] $fields_array
      *
      * @return [Query]
      */
@@ -145,7 +145,7 @@ class Query
     }
 
     /**
-     * Where function
+     * Where Clause for the Queries
      *
      * @param array $where_clause
      *
@@ -163,7 +163,7 @@ class Query
     }
 
     /**
-     * AndClause function
+     * And Clause for the Queries
      *
      * @param array $clause
      *
@@ -179,9 +179,9 @@ class Query
     }
 
     /**
-     * OrClause function
-     * Adds an or clause
-     * @param array $clause
+     * Or Clause for the queries 
+     * 
+     * @param [array] $clause
      * @return [Query]
      */
     public function OrClause(array $clause)
@@ -194,7 +194,7 @@ class Query
     }
 
     /**
-     * Limit() function
+     * Limit Clause for the queries
      *
      * @param [integer] $rows
      * @param [integer] $offset
@@ -216,11 +216,38 @@ class Query
     }
 
     /**
-     * SendQuery()
+     * OrderBy Clause for the queries
      *
+     * @param [array] $fields
+     * @param [string] $order
      * @return [Query]
      */
-    public function SendQuery()
+    public function OrderBy(array $fields, $order="ASC")
+    {
+       if (empty($fields) or !is_array($fields)) return false;
+       if (!in_array(strtoupper($order),array("ASC","DESC"))) return false;
+       if (!isset($this->sql)) return false;
+       $this->sql .= " ORDER BY ";
+        $count = 0;
+        foreach ($fields as $field) 
+        {
+            $this->sql .= $field;
+            if ($count < count($fields)-1)
+            {
+                $this->sql.=",";
+            }   
+            $count++; 
+        }
+         $this->sql.= " ".strtoupper($order);
+        return $this;
+    }
+
+    /**
+     * Runs the Query and updates the class members
+     * 
+     * @return [Query]
+     */
+    public function Run()
     {
         $dbo = $this->db->GetDBConnection();        
         $stmt = $dbo->prepare($this->sql);
@@ -235,7 +262,7 @@ class Query
     }
 
     /**
-     * Undocumented function
+     * Return the error code if a query fails
      *
      * @return [string] | [false]
      */
@@ -249,7 +276,7 @@ class Query
     }
     
     /**
-     * GetLastInsertID function
+     * Get LastInsert ID if an insert is issued
      *
      * @return [integer]|[false]
      */
@@ -261,21 +288,25 @@ class Query
         }
         return $this->lastInsertId;
     }
-
     /**
-     * GetRows function
+     * Get Returned Rows from a SELECT query
      *
      * @return [array]|[false]
      */
-    public function GetRows()
+    public function GetReturnedRows()
     {
         if (!isset($this->returned_rows))
-        {
+        {    
             return false;
         }
         return $this->returned_rows;
     }
 
+    /**
+     * return the SQL code for the query issued
+     *
+     * @return [string]
+     */
     public function getSQL()
     {
         echo $this->sql;

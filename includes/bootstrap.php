@@ -8,23 +8,16 @@ function boot()
     echo "Site booting..<br/>";
     
     LoadSettings();
-    spl_autoload_register('Autoload_Classes_Engines');
- 
+    Autoload_Classes_Engines();
 
     $db = new DB();
 
     $query = new Query($db);
 
-    $query->SetTableName("testtable");
-    $query->Delete()->Where(['tid',">","1"])->AndClause(["sid",">","20"]);
-    $query->Limit(1);
-    
-
-    echo "<br/>";
-    $query->getSQL();
+    Router::Listen();
 
     $url = new URL();
-    echo $url->URLToString();
+    echo $url->URLtoPath();
     var_dump($url->GetURLArray());
     echo $url->GetCurrentURI();
 }
@@ -49,6 +42,11 @@ function LoadSettings()
     include_once("settings\settings.php");
 }
 
+function Load($class)
+{
+    $path = "includes\classes\/";
+    include("{$path}{$class}_class.php"); 
+}
 
 /**
  * Autoloader Function for the Framework
@@ -62,9 +60,9 @@ function Autoload_Classes_Engines()
     foreach ($files_path_array as $path) 
     {
      if (!is_uploaded_file($path) and is_readable($path))
-    {
+     { 
         include_once($path);
-    }    
+     }    
     }
 }
 

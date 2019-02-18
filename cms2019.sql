@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 15, 2019 at 06:57 PM
+-- Generation Time: Feb 18, 2019 at 07:02 PM
 -- Server version: 5.7.21
 -- PHP Version: 5.6.35
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `routes` (
   `system` tinyint(1) NOT NULL,
   `userlevel` int(11) NOT NULL,
   PRIMARY KEY (`routeid`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `routes`
@@ -48,7 +48,9 @@ CREATE TABLE IF NOT EXISTS `routes` (
 
 INSERT INTO `routes` (`routeid`, `action`, `type`, `id`, `mod_name`, `mod_desc`, `status`, `system`, `userlevel`) VALUES
 (1, 'add', 'user', 0, 'add_user', 'add users ', 1, 1, 0),
-(2, 'login', NULL, 0, 'login', 'The login module of the CMS', 1, 1, 0);
+(2, 'login', NULL, 0, 'login', 'The login module of the CMS', 1, 1, 0),
+(3, 'display', 'not_found', 0, 'not_found', 'Page Not found Module', 1, 1, 0),
+(4, 'home', NULL, 0, 'home', 'This is the home module for the CMS', 1, 1, 0);
 
 -- --------------------------------------------------------
 

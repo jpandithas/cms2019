@@ -10,7 +10,8 @@ function boot()
     LoadSettings();
     Autoload_Classes_Engines();
 
-    Listen();
+
+    ListenforRoute();
 
     $url = new URL();
     echo $url->URLtoPath();
@@ -24,15 +25,23 @@ function boot()
      * @param [URL] $url
      * @return void
      */
-    function Listen(){
-        $mod_name = Router::ResolveModuleURL(new URL()); 
+    function ListenforRoute(){
+        $url = new URL();
+        
+        if (count($url->GetURLArray()) == 0){
+           $url->InternalRedirect('home'); 
+           return false; 
+        }
+        
+        $mod_name = Router::ResolveModuleURL($url); 
+        
         if ($mod_name == true){
-            Router::LoadModFromFiles($mod_name,false);    
+            Router::LoadModFromFiles($mod_name);    
         }
         else 
         {
-            //has to be handled 
-            print("<h2> page not found </h2>");
+          $url->InternalRedirect('display/not_found'); 
+          return false;
         }
     }
 

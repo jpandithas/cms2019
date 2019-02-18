@@ -3,38 +3,18 @@
 class Router 
 {
 
-    /**
-     * Listens for a URL and Loads the module. Useful for bootstrapping
-     *
-     * @param [URL] $url
-     * @return void
-     */
-    public static function Listen(){
-        $mod_name = self::ResolveModuleURL(new URL()); 
-        if ($mod_name == true){
-            self::LoadModFromFiles($mod_name,false);    
-        }
-        else 
-        {
-            //has to be handled 
-            //print("<h2> page not found </h2>");
-            header("Location:".CMS_BASE_URL); 
-        }
-    }
+   
 
     /**
      * Loads the module from the filesystem with optional namecheck
      *
      * @param [string] $mod_name
-     * @param [boolean] $verify_name
      * @return [void]
      */
-    public static function LoadModFromFiles($mod_name, $verify_name = true)
+    public static function LoadModFromFiles($mod_name)
     {
         if (empty($mod_name) or !is_string($mod_name)) return false;
-        if ($verify_name == true){
-            if (self::ModuleNameExists($mod_name)==false) return false;
-        }
+        if (self::ModCanRun($mod_name)==false) return false;
 
         $module_path ="modules".DIRECTORY_SEPARATOR.$mod_name; 
         if (is_dir($module_path)){
@@ -95,6 +75,46 @@ class Router
         return $result[0]['mod_name'];
     }
 
+    /**
+     * Checks if the module is system and enabled 
+     *
+     * @param [string] $mod_name
+     * @return [boolean]
+     */
+    public static function ModCanRun($mod_name)
+    {
+        if (empty($mod_name) or !is_string($mod_name)) return false; 
+
+        $query = new Query(new DB()); 
+        $query->SetTableName("routes");
+        $query->Select(['status','system']);
+        $query->Where(['mod_name','=',$mod_name]);
+        $query->Run(); 
+
+        $result = $query->GetReturnedRows(); 
+        if (count($result)==0) return false;
+
+        $status = $result[0]['status'];
+        $system = $result[0]['system']; 
+        
+        switch ($system) {
+            case '1':
+            return true;
+                break;
+
+            case '0':
+                if ($status == 1){
+                    return true;
+                }
+                else{
+                    return false; 
+                }
+                break;
+            default:
+                return false;
+                break;
+        }
+    }
 
 }
 

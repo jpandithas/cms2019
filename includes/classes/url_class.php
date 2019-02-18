@@ -6,7 +6,7 @@ class URL
     protected $action;
     protected $type;
     protected $id;
-    protected $url_component_array;
+    protected $url_component_array = array();
 
 
     public function __construct()

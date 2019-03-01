@@ -11,12 +11,14 @@ function boot()
     Autoload_Classes_Engines();
 
 
-    ListenforRoute();
+    RouteListener();
 
-    $url = new URL();
-    echo $url->URLtoPath();
-    var_dump($url->GetURLArray());
-    echo $url->GetCurrentURI();
+    $theme = Theme::GetActiveTheme(); 
+    if (is_dir('themes'.DIRECTORY_SEPARATOR.$theme)){
+        include_once('themes'.DIRECTORY_SEPARATOR.$theme.DIRECTORY_SEPARATOR.$theme.'.tpl.php');
+    }
+
+    
 }
 
  /**
@@ -25,7 +27,7 @@ function boot()
      * @param [URL] $url
      * @return void
      */
-    function ListenforRoute(){
+    function RouteListener(){
         $url = new URL();
         
         if (count($url->GetURLArray()) == 0){

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 18, 2019 at 07:02 PM
+-- Generation Time: Mar 01, 2019 at 07:16 PM
 -- Server version: 5.7.21
 -- PHP Version: 5.6.35
 
@@ -74,6 +74,29 @@ CREATE TABLE IF NOT EXISTS `testtable` (
 INSERT INTO `testtable` (`id`, `text1`, `num1`, `txt`) VALUES
 (1, 'this is varchar', 12343, 'jsdg djf df\r\ndkkhf djf hd\r\n\r\ndkfh dkfdjfh d'),
 (2, 'text 2 for varchar', 21344333, 'd,mfhd jf hdf\r\ndkhf dkfff f\r\n\r\ndfdlkjf dfjkd kfjd');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `theme_registry`
+--
+
+DROP TABLE IF EXISTS `theme_registry`;
+CREATE TABLE IF NOT EXISTS `theme_registry` (
+  `themeid` int(11) NOT NULL AUTO_INCREMENT,
+  `theme_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `theme_display_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `theme_desc` text COLLATE utf8_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  PRIMARY KEY (`themeid`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `theme_registry`
+--
+
+INSERT INTO `theme_registry` (`themeid`, `theme_name`, `theme_display_name`, `theme_desc`, `status`) VALUES
+(1, 'default', 'The Default Theme', 'This is the default theme, with standard functionality and structure. \r\nDO NOT REMOVE THIS THEME', 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

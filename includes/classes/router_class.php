@@ -43,7 +43,7 @@ class Router
         $query->Select(['mod_name']);
         $query->Where(["action","=",$url_array['action']]);
 
-        if (array_key_exists('type',$url_array)){
+        if (array_key_exists('type', $url_array)){
             $query->AndClause(['type','=',$url_array['type']]);
         }
 

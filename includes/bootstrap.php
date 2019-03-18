@@ -13,6 +13,8 @@ function boot()
 
     RouteListener();
 
+    var_dump(Security::Authenticate('admin','admin'));
+
     $theme = Theme::GetActiveTheme(); 
     if (is_dir('themes'.DIRECTORY_SEPARATOR.$theme)){
         include_once('themes'.DIRECTORY_SEPARATOR.$theme.DIRECTORY_SEPARATOR.$theme.'.tpl.php');

@@ -5,7 +5,7 @@ The folder structure and the naming convention is as follows:
     \mod_name
         |
         mod_name.php
-            |function mod_name()
+            |-function mod_name()
 
 You should also register the module to the routes table
     action-> value at least here 

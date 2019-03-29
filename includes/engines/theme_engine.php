@@ -43,12 +43,20 @@ function Footer_Navi()
 
 function Content()
 {
-    print("CONTENT"); 
+   if (empty($GLOBALS['content']) or !isset($GLOBALS['content']))
+   {
+       $GLOBALS['content'] = "No Content";
+   }
+    print($GLOBALS['content']); 
 }
 
 function Append_Content($content)
 {
-    # code...
+    if (!isset($GLOBALS['content']))
+    {
+        $GLOBALS['content'] = ""; 
+    }
+    $GLOBALS['content'] .= $content; 
 }
 
 function Append_Title($title)

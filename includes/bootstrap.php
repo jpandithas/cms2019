@@ -5,7 +5,7 @@
 */
 function boot()
 {
-    echo "Site booting..<br/>";
+    //echo "Site booting..<br/>";
     
     LoadSettings();
     Autoload_Classes_Engines();
@@ -13,7 +13,7 @@ function boot()
 
     RouteListener();
 
-    var_dump(Security::Authenticate('admin','admin'));
+    //var_dump(Security::Authenticate('admin','admin'));
 
     $theme = Theme::GetActiveTheme(); 
     if (is_dir('themes'.DIRECTORY_SEPARATOR.$theme)){

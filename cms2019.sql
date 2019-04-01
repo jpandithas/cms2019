@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 18, 2019 at 06:53 PM
--- Server version: 5.7.21
--- PHP Version: 7.0.29
+-- Generation Time: Apr 01, 2019 at 01:24 PM
+-- Server version: 5.7.24
+-- PHP Version: 7.2.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -35,22 +35,25 @@ CREATE TABLE IF NOT EXISTS `routes` (
   `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `id` tinyint(1) DEFAULT NULL,
   `mod_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `mod_display_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `mod_desc` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL,
   `system` tinyint(1) NOT NULL,
+  `visible` tinyint(1) NOT NULL,
   `userlevel` int(11) NOT NULL,
   PRIMARY KEY (`routeid`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `routes`
 --
 
-INSERT INTO `routes` (`routeid`, `action`, `type`, `id`, `mod_name`, `mod_desc`, `status`, `system`, `userlevel`) VALUES
-(1, 'add', 'user', 0, 'add_user', 'add users ', 1, 1, 0),
-(2, 'login', NULL, 0, 'login', 'The login module of the CMS', 1, 1, 0),
-(3, 'display', 'not_found', 0, 'not_found', 'Page Not found Module', 1, 1, 0),
-(4, 'home', NULL, 0, 'home', 'This is the home module for the CMS', 1, 1, 0);
+INSERT INTO `routes` (`routeid`, `action`, `type`, `id`, `mod_name`, `mod_display_name`, `mod_desc`, `status`, `system`, `visible`, `userlevel`) VALUES
+(1, 'add', 'user', 0, 'add_user', 'Add User', 'add users ', 1, 1, 1, 0),
+(2, 'login', NULL, 0, 'login', 'Login', 'The login module of the CMS', 1, 1, 1, 0),
+(3, 'not_found', NULL, 0, 'not_found', '404', 'Page Not found Module', 1, 1, 0, 0),
+(4, 'home', NULL, 0, 'home', 'Home', 'This is the home module for the CMS', 1, 1, 1, 0),
+(5, 'logout', NULL, 0, 'logout', 'Logout', 'Logout from the CMS', 1, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -118,7 +121,26 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`uid`, `username`, `password`, `userlevel`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 0);
+(1, 'admin', '16d7a4fca7442dda3ad93c9a726597e4', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `variables`
+--
+
+DROP TABLE IF EXISTS `variables`;
+CREATE TABLE IF NOT EXISTS `variables` (
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `value` text COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `variables`
+--
+
+INSERT INTO `variables` (`name`, `value`) VALUES
+('site_name', 'MY WEBSITE');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

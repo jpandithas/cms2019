@@ -8,12 +8,27 @@ function Logo()
 
 function Site_Name()
 {
-    print("MY SITE");
+    $query = new Query(new DB());
+    $query->SetTableName('variables');
+    $query->Select(['value']); 
+    $query->Where(['name','=','site_name']); 
+    $query->Limit(1);
+    $query->Run(); 
+
+     
+    $result = $query->GetReturnedRows();
+    print($result[0]['value']); 
+    $query = null; 
 }
 
 function Page_Title()
 {
-    print(Site_Name()." | Title"); 
+    
+    $title = Site_Name(); 
+    if (isset($GLOBALS['page_title'])){
+        $title.=" | ".$GLOBALS['page_title']; 
+    }
+    print $title; 
 }
 
 function Head_Navigation()
@@ -24,12 +39,15 @@ function Head_Navigation()
 function Side_Navi()
 {
     print("SIDE NAVI"); 
+    
 }
 
 function Main_Navi()
 {
-    print("MAIN NAVI");
+    Main_Navigation::GreetUser(); 
+    Main_Navigation::Render_Menu(); 
 }
+
 
 function Footer_Info()
 {
@@ -61,7 +79,7 @@ function Append_Content($content)
 
 function Append_Title($title)
 {
-    # code...
+    $GLOBALS['page_title'] = $title; 
 }
 
 ?>

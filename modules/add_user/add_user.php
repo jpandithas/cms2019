@@ -2,7 +2,7 @@
 
 function add_user()
 {
-    echo "<h2> Hi I am A module! </h2>";
+    Append_Content("<h2> Hi I am A module! </h2>");
 }
 
 ?>

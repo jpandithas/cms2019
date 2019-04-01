@@ -5,7 +5,6 @@ class User
     protected $uid;
     protected $username; 
     protected $password; 
-    protected $isAuthenticated; 
 
     public function __construct($username, $password)
     {
@@ -21,7 +20,6 @@ class User
         $this->uid = $uid;
         $this->username = $username;
         $this->password = $password; 
-        $this->isAuthenticated = true; 
     }
 
     public function GetUID(){

@@ -2,10 +2,9 @@
 
 function not_found()
 {
-    print("<h1> Page Not Found! </h1>");
+    Append_Content("<h1> Page Not Found! </h1>");
 
-    $home = "<br/><a href='".CMS_BASE_URL."'> Home </a><br/>";
-    print($home); 
+    Append_Content( "<br/><a href='".CMS_BASE_URL."'> Return to Home Page </a><br/>");
 }
 
 ?>

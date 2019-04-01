@@ -14,6 +14,9 @@ function boot()
     RouteListener();
 
     //var_dump(Security::Authenticate('admin','admin'));
+    //var_dump($_SESSION);
+    //var_dump(Security::UserIsLoggedIn());
+   // var_dump($GLOBALS);
 
     $theme = Theme::GetActiveTheme(); 
     if (is_dir('themes'.DIRECTORY_SEPARATOR.$theme)){
@@ -44,7 +47,7 @@ function boot()
         }
         else 
         {
-          $url->InternalRedirect('display/not_found'); 
+          $url->InternalRedirect('not_found'); 
           return false;
         }
     }

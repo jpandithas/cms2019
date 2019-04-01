@@ -9,18 +9,14 @@
 </head>
 <body>
     <div id="site-wrapper" class="site">
-        <div id="header-wrapper">
-            <div id="header-inner">
+        <div id="header-wrapper">      
                 <div id="logo"><?php Logo();?></div>
-                <div id="site-name"><?php Site_Name();?></div>
+                <div id="site-name"><h1><?php Site_Name();?></h1></div>
                 <div id="head-navi"><?php Head_Navigation();?></div>
-            </div>
         </div>
-        <div id="content-wrapper">
-            <div id="content-inner">
-                <div id="sidebar-left"><?php Main_Navi();?></div>
-                <div id="content-main"><?php Content();?></div>
-            </div>
+        <div id="content-wrapper" >
+                <div id="sidebar-left"><?php Main_Navi();?> </div>
+                <div id="content-main" ><?php Content();?>  </div>
         </div>
         <div id="footer-wrapper">
             <div id="footer-inner-left"><?php Footer_Navi();?></div>

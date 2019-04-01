@@ -52,6 +52,14 @@ class Security
         }
         return false; 
     }
+
+    public static function UserIsLoggedIn()
+    {
+        if (isset($_SESSION['username']) and isset($_SESSION['userlevel'])){
+            return TRUE;
+        }
+        return FALSE; 
+    }
 }
 
 ?>

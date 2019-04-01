@@ -25,6 +25,6 @@ The following features should be supported:
   - [x] And Clause
   - [x] Or Clause 
   - [x] Limit Clause 
-  - [ ] Order By 
+  - [x] Order By 
   
   

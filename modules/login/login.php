@@ -27,13 +27,13 @@ function Login()
             
             $query = new Query(new DB()); 
             $query->SetTableName('user');
-            $query->Select(['userlevel']);
+            $query->Select(['role']);
             $query->Where(['uid','=',$uid]);
             $query->Limit(1); 
             $query->Run(); 
             $result = $query->GetReturnedRows();
             
-            $_SESSION['userlevel'] = $result[0]['userlevel'];
+            $_SESSION['role'] = $result[0]['role'];
 
             $url = new URL();
             $url->InternalRedirect('home'); 

@@ -1,10 +1,16 @@
 <?php 
-
+/**
+ * Logout
+ *
+ * @return [void]
+ */
 function logout()
 {
-    unset($_SESSION['username']); 
-    unset($_SESSION['userlevel']); 
     session_destroy(); 
+
+    unset($_SESSION['username']); 
+    $_SESSION['role']=1;
+
     $url = new URL(); 
     $url->InternalRedirect('home'); 
 }

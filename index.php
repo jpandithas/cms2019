@@ -1,7 +1,7 @@
 <?php 
 session_start();
-
-include_once("includes\bootstrap.php");
+#set_include_path(get_include_path().PATH_SEPARATOR.'includes'); 
+include_once("includes".DIRECTORY_SEPARATOR."bootstrap.php");
 
 boot();
 ?>

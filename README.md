@@ -14,9 +14,9 @@ Object Oriented PHP
 The following features should be supported:
 - [x] PHP OOP Framework
 - [x] Boostraping capability 
-- [x] Router to support the Controller 
-- [x] Modular Design 
-- [x] Themes 
+- [ ] Router to support the Controller 
+- [ ] Modular Design 
+- [ ] Themes 
 - [x] Database Connector Class 
 - [x] Query ORM 
 - Queries:
@@ -28,6 +28,6 @@ The following features should be supported:
   - [x] And Clause
   - [x] Or Clause 
   - [x] Limit Clause 
-  - [x] Order By 
+  - [ ] Order By 
   
   

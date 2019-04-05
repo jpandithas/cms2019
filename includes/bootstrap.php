@@ -5,12 +5,23 @@
 */
 function boot()
 {
-    //echo "Site booting..<br/>";
-    
+    /**
+     * Autoloader 
+     */
     LoadSettings();
     Autoload_Classes_Engines();
-
-
+    # Write Below This Line
+    
+    /**
+     * Check if user is Anonymous
+     */
+    if (Security::UserIsLoggedIn()== FALSE) {
+        $_SESSION['role'] = 1;
+    }
+    #var_dump($_SESSION); 
+    /**
+     * Listen For Routes
+     */
     RouteListener();
 
     //var_dump(Security::Authenticate('admin','admin'));
@@ -41,6 +52,8 @@ function boot()
         }
         
         $mod_name = Router::ResolveModuleURL($url); 
+
+        var_dump(Security::UserHasPerMission($mod_name)); 
         
         if ($mod_name == true){
             Router::LoadModFromFiles($mod_name);    
@@ -69,12 +82,12 @@ function TestDB()
  */
 function LoadSettings()
 {
-    include_once("settings\settings.php");
+    include_once("settings".DIRECTORY_SEPARATOR."settings.php");
 }
 
 function Load($class)
 {
-    $path = "includes\classes\/";
+    $path = "includes".DIRECTORY_SEPARATOR."classes".DIRECTORY_SEPARATOR;
     include("{$path}{$class}_class.php"); 
 }
 
@@ -85,7 +98,7 @@ function Load($class)
  */
 function Autoload_Classes_Engines()
 {
-    $path='includes\*\*.php';
+    $path='includes'.DIRECTORY_SEPARATOR.'*'.DIRECTORY_SEPARATOR.'*.php';
     $files_path_array = glob($path);
     foreach ($files_path_array as $path) 
     {

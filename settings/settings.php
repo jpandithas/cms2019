@@ -1,7 +1,7 @@
 <?php 
 //System Settings
 define("CMS_BASE_PATH",getcwd());
-define("CMS_BASE_URL",$_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
+define("CMS_BASE_URL",$_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']);
 //Database settings
 define("DB_HOST","localhost");
 define("DB_ENGINE","mysql");

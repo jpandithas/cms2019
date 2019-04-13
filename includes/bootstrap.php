@@ -6,7 +6,7 @@
 function boot()
 {
     /**
-     * Autoloader 
+     * Autoloader for Classes and Engines
      */
     LoadSettings();
     Autoload_Classes_Engines();
@@ -18,10 +18,7 @@ function boot()
     if (Security::UserIsLoggedIn()== FALSE) {
         $_SESSION['role'] = 1;
     }
-    #var_dump($_SESSION); 
-    /**
-     * Listen For Routes
-     */
+    
     RouteListener();
 
     //var_dump(Security::Authenticate('admin','admin'));
@@ -53,7 +50,9 @@ function boot()
         
         $mod_name = Router::ResolveModuleURL($url); 
 
-        var_dump(Security::UserHasPerMission($mod_name)); 
+        if (Security::UserHasPerMission($mod_name)==False) {
+            $url->InternalRedirect('denied');
+        } 
         
         if ($mod_name == true){
             Router::LoadModFromFiles($mod_name);    

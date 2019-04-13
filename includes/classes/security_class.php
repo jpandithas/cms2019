@@ -32,9 +32,9 @@ class Security
     /**
      * Authenticates the user from the username and the password
      *
-     * @param [string] $usenrame
-     * @param [string] $password
-     * @return [string]|[false]
+     * @param string $usenrame
+     * @param string $password
+     * @return string|false
      */
     public static function Authenticate($usenrame, $password)
     {   
@@ -56,7 +56,7 @@ class Security
     /**
      * Asks if a user has logged in
      *
-     * @return [boolean]
+     * @return boolean
      */
     public static function UserIsLoggedIn()
     {
@@ -68,6 +68,22 @@ class Security
         return FALSE; 
     }
 
+    /**
+     * Gets the user Roles from the Session
+     *
+     * @return int
+     */
+    public static function GetUserRole_Session()
+    {
+        return $_SESSION['role']; 
+    }
+
+    /**
+     * Checks if the use has permission to a module
+     *
+     * @param string $mod_name
+     * @return boolean
+     */
     public static function UserHasPerMission($mod_name)
     {
         if (empty($mod_name)) return FALSE; 

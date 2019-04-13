@@ -163,7 +163,8 @@ class Query
     }
 
     /**
-     * And Clause for the Queries
+     * And Clause for the Queries.
+     * Input is given via an Array
      *
      * @param array $clause
      *

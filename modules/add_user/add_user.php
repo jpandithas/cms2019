@@ -11,25 +11,29 @@ function add_user()
 function Add_User_Form()
 {
     $form = new Webform("","POST","add_user_form");
-    $form->insert_data_textbox("Username","username",""); 
-    $form->insert_passwordbox("Password","password1");
-    $form->insert_passwordbox("Confirm Password", "password2"); 
+    $form->webform_textbox("Username","username",null,"Enter a username..",true); 
+    $form->webform_password_textbox("Password","password1","Enter a password...",True); 
+    $form->webform_password_textbox("Retype Password","password2","Type the password again..",true); 
     
     $query = new Query(new DB()); 
     $query->SetTableName("roles"); 
     $query->Select(['role_display_name','roleid']); 
     $query->Run(); 
     $result = $query->GetReturnedRows();
+    
     //var_dump($result);  
     $roles_array = array(); 
+    $roles_values = array(); 
     foreach ($result as $row){
         $roles_array[] = $row['role_display_name'];
+        $roles_values[] = $row['roleid']; 
     }
-    var_dump($roles_array); 
-    $form->insert_option("role",$roles_array); 
-    $form->insert_submit("Add User"); 
+  
+    
+    $form->webform_option_menu("User Role","role",$roles_array,$roles_values); 
+    $form->webform_submit_button("Add User"); 
 
-    return $form->getForm(); 
+    return $form->webform_getForm();  
 }
 
 ?>

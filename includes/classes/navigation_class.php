@@ -6,7 +6,7 @@ class Main_Navigation {
         
         $query = new Query(new DB()); 
         $query->SetTableName("routes"); 
-        $query->Select(['action','type','mod_display_name']); 
+        $query->Select(['action','type','mod_display_name','mod_name']); 
         $query->Where(['status','=','1']);
         $query->AndClause(['visible','=','1']); 
         $query->OrderBy(['mod_display_name']); 
@@ -22,7 +22,9 @@ class Main_Navigation {
         foreach ($result as $row) {
             if (Security::UserIsLoggedIn()==true and $row['action']=='login') continue;
             if (Security::UserIsLoggedIn()==false and $row['action']=='logout') continue;
-
+            
+            if (Security::UserHasPerMission($row['mod_name'])==false) continue; 
+        
             $html.="<li id='nav-item' class='nav'>";
             $html.="<a class='nav-link' href=".CMS_BASE_URL."?q=".$row['action'];
             if (!empty($row['type'])) {

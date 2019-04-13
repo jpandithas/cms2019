@@ -6,6 +6,7 @@
     <title><?php Page_Title();?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="themes\default\default.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="themes\default\forms.css">
 </head>
 <body>
     <div id="site-wrapper" class="site">

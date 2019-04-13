@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 05, 2019 at 06:04 PM
+-- Generation Time: Apr 13, 2019 at 10:15 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   `routeid` int(11) NOT NULL,
   `allowed` tinyint(1) NOT NULL,
   PRIMARY KEY (`permid`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='This is the permissions table';
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='This is the permissions table';
 
 --
 -- Dumping data for table `permissions`
@@ -56,7 +56,10 @@ INSERT INTO `permissions` (`permid`, `roleid`, `routeid`, `allowed`) VALUES
 (12, 3, 4, 1),
 (13, 3, 5, 1),
 (14, 3, 1, 0),
-(15, 1, 1, 0);
+(15, 1, 1, 0),
+(16, 1, 6, 1),
+(17, 2, 6, 1),
+(18, 3, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -101,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `routes` (
   `system` tinyint(1) NOT NULL,
   `visible` tinyint(1) NOT NULL,
   PRIMARY KEY (`routeid`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `routes`
@@ -112,7 +115,8 @@ INSERT INTO `routes` (`routeid`, `action`, `type`, `id`, `mod_name`, `mod_displa
 (2, 'login', NULL, 0, 'login', 'Login', 'The login module of the CMS', 1, 1, 1),
 (3, 'not_found', NULL, 0, 'not_found', '404', 'Page Not found Module', 1, 1, 0),
 (4, 'home', NULL, 0, 'home', 'Home', 'This is the home module for the CMS', 1, 1, 1),
-(5, 'logout', NULL, 0, 'logout', 'Logout', 'Logout from the CMS', 1, 1, 1);
+(5, 'logout', NULL, 0, 'logout', 'Logout', 'Logout from the CMS', 1, 1, 1),
+(6, 'denied', NULL, NULL, 'denied', 'Access Denied', 'Access Denied Page', 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -202,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `variables` (
 --
 
 INSERT INTO `variables` (`vid`, `name`, `value`) VALUES
-(1, 'site_name', 'CMS 2019');
+(1, 'site_name', 'Project Plastelline 2019');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

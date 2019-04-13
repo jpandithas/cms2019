@@ -40,7 +40,7 @@ function Login()
         }
         else 
         {
-            Append_Content("<h3> Login Failed </h3>");          
+            Append_Content("<h4 class='error-bar'> &#9888; Login Failed </h4>");          
         }
     }
 
@@ -51,18 +51,19 @@ function Login()
 /**
  * Login Form
  *
- * @return [string]
+ * @return string
  */
-function login_form()
-{
-    $form  = "<form name='login' id='login-form' action='' method='post'>";
-    $form .= "<table>";
-    $form .= "<tr> <td> Username </td><td><input type='text' name='username' required='required'></td></tr>";
-    $form .= "<tr> <td> Password </td><td><input type='password' name='password' required='required'></td></tr>";
-    $form .= "<tr><td colspan='2'><input type='submit' name='submit' value='Login'></td></tr>";
-    $form .= "</table>";
-    $form .= "</form>";
-    return $form;
+
+function login_form(){
+    
+    $form = new Webform("","post","login-form"); 
+    $form->webform_textbox("Username","username",null,"Enter your username hare..",true);
+    $form->webform_password_textbox("Password","password","Enter your password here..",TRUE); 
+    $form->webform_submit_button("Login"); 
+    $form_warp_end = "</div>";
+    return $form->webform_getForm(); 
 }
+
+
 
 ?>

@@ -120,27 +120,16 @@ class Webform
         $this->formvars[$varname] = $varname;
     }
 
-    /**
-     * Adds text to the Webform
-     *
-     * @param [string] $text
-     * @return void
-     */
-    public function webform_add_text($text){
-        $this->formdata.= "<div class='field-row'>";
-        $this->formdata.= $text;
-        $this->formdata.= "</div>"; 
-    }
 
     /**
      * Inserts a Textarea in the form
      *
-     * @param [string] $display_text
-     * @param [int] $rows
-     * @param [int] $cols
-     * @param [string] $varname
-     * @param [string] $prefill_value
-     * @param [string] $placeholder
+     * @param string $display_text
+     * @param int $rows
+     * @param int $cols
+     * @param string $varname
+     * @param string $prefill_value
+     * @param string $placeholder
      * @param boolean $is_required
      * @return void
      */
@@ -158,6 +147,52 @@ class Webform
         $this->formdata.= "</div>"; 
         $this->formvars[$varname] = $varname;
     }
+
+    /**
+     * Adds a checkbox to the webform
+     *
+     * @param string $varname
+     * @param string $option_name
+     * @param boolean $is_checked
+     * @param boolean $is_required
+     * @return void
+     */
+    public function weform_checkbox($varname, $option_name, $is_checked=False, $is_required=False){
+        $this->formdata.= "<div class='col-30'>"; 
+        $this->formdata.= "</div>"; 
+        $this->formdata.="<div class='col-70'>";
+        $this->formdata.= "<input type='checkbox' name={$varname} class='form-checkbox'";
+        if ($is_checked) {$this->formdata.= " checked='checked' ";}
+        if ($is_required) {$this->formdata.= " required ='required'";}
+        $this->formdata.= ">"; 
+        $this->formdata.= "<label for='checkbox'>{$option_name}</label>";
+        $this->formdata.= "</div>";
+    }
+
+    public function webform_add_fieldrow_start()
+    {
+        $this->formdata.= "<div class='field-row'>";
+    }
+
+    public function webform_add_fieldrow_end()
+    {
+        $this->formdata.= "</div>";
+    }
+
+     /**
+     * Adds text to the Webform
+     *
+     * @param [string] $text
+     * @return void
+     */
+    public function webform_add_text_row($text, $separator=False){
+        $this->formdata.= "<div class='field-row ";
+        if ($separator) {$this->formdata.=" form-separator";}
+        $this->formdata.= "'>";
+        $this->formdata.= $text;
+        $this->formdata.= "</div>"; 
+    }
+    
     
     /**
      * Renders the form as html 

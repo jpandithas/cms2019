@@ -9,20 +9,18 @@
     <link rel="stylesheet" type="text/css" media="screen" href="themes\default\forms.css">
 </head>
 <body>
-    <div id="site-wrapper" class="site">
-        <div id="header-wrapper">      
-                <div id="logo"><?php Logo();?></div>
-                <div id="site-name"><h1><?php Site_Name();?></h1></div>
-                <div id="head-navi"><?php Head_Navigation();?></div>
+        <div class="header-wrapper">      
+                <div class="logo"><?php Logo();?></div>
+                <div class="site-name"><h1><?php Site_Name();?></h1></div>
+                <div class="head-navi"><?php Head_Navigation();?></div>
         </div>
-        <div id="content-wrapper" >
-                <div id="sidebar-left"><?php Main_Navi();?> </div>
-                <div id="content-main" ><?php Content();?>  </div>
+        <div class="content-wrapper" >
+                <div class="sidebar-left"><?php Main_Navi();?> </div>
+                <div class="content-main" ><?php Content();?>  </div>
         </div>
-        <div id="footer-wrapper">
-            <div id="footer-inner-left"><?php Footer_Navi();?></div>
-            <div id="footer-inner-bottom"><?php Footer_Info();?></div>
+        <div class="footer-wrapper">
+            <div class="footer-inner-left"><?php Footer_Navi();?></div>
+            <div class="footer-inner-right"><?php Footer_Info();?></div>
         </div>
-</div>
 </body>
 </html>

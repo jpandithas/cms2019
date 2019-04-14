@@ -49,15 +49,24 @@ input[type=text], select, textarea {
     background-color: rgba(200,200,250, 0.7);
     padding: 20px;
   }
-  
-  /* Floating column for labels: 25% width */
+
+  .form-separator{
+    border-radius: 5px;
+    background-color: rgba(200,200,220, 0.7);
+    padding-top: 3px; 
+    padding-bottom: 3px; 
+    font-weight: bolder; 
+    margin-top: 3px;
+    margin-bottom: 3px; 
+  }
+  /* Floating column for labels: 30% width */
   .col-30 {
     float: left;
     width: 30%;
     margin-top: 6px;
   }
   
-  /* Floating column for inputs: 75% width */
+  /* Floating column for inputs: 70% width */
   .col-70 {
     float: left;
     width: 70%;

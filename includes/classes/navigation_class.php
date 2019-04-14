@@ -42,7 +42,7 @@ class Main_Navigation {
     {
         if (Security::UserIsLoggedIn())
         {
-            $html = "<h3 id='user-hello'>";
+            $html = "<h3 class='sidebar-row' id='user-hello'>";
             $html .= "User: ".$_SESSION['username'];
             $html .= "</h3>"; 
             print($html); 

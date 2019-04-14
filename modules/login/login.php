@@ -13,7 +13,7 @@ function Login()
     {
         
         if (empty($_POST['username']) or empty($_POST['password'])){
-            Append_Content("<h3> Login Failed </h3>");
+            Append_Content("<h4 class='error-bar'> Login Failed </h4>");
             Append_Content(login_form()); 
             return FALSE; 
         }

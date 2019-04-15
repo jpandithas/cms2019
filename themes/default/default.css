@@ -37,12 +37,36 @@ html, body {
     margin: 2px; 
 }
 
+/* NAVBAR SETTINGS */ 
+
 .head-navi {
     padding: 15px; 
     overflow: hidden;
     top:0; 
     background-color: #ffb151;
+    color: white;
+    
 }
+
+  .head-navi a{
+      overflow: hidden; 
+      padding: 15px;
+      text-decoration: none;
+      color: white; 
+      font-weight: bolder; 
+      font-size: 1.2vw; 
+  }
+  
+  .head-navi a:hover {
+    background-color: #be7c00;
+    color: white;
+
+  }
+  
+  .head-navi a.active {
+    background-color: rgb(84, 166, 233);
+    color: white;
+  }
 
 /* CONTENT AREA */ 
 
@@ -211,6 +235,9 @@ input:checked ~ #menu {
     }
     .footer-inner-left{
         border: 0px; 
+    }
+    .head-navi{
+        display: none;
     }
     .logo{
         display: none; 

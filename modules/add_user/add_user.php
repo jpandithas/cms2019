@@ -4,7 +4,7 @@ function add_user()
 {
     Append_Title("Add User"); 
     Append_Content("<h2> Add User </h2>");
-    $form_errors=array(); 
+    $form_errors= array(); 
 
     if (isset($_POST['submit']) and ($_POST['submit']=='Add User')){
         if (empty($_POST['username']) or empty($_POST['password1']) or empty('passowrd2')){    
@@ -36,7 +36,7 @@ function add_user()
             foreach ($form_errors as $error){
                 $html.="<li>{$error}</li>";
             }
-            $html.="</ol>"; 
+            $html.="</ul>"; 
             $html.="</h4>"; 
             Append_Content($html); 
             Append_Content(Add_User_Form());
@@ -52,7 +52,7 @@ function add_user()
 
 function Add_User_Form()
 {
-    $form = new Webform("","POST","add_user_form");
+    $form = new Webform("add_user_form");
     $form->webform_textbox("Username","username",null,"Enter a username..",true); 
     $form->webform_password_textbox("Password","password1","Enter a password (6 characters minimum) ...",True); 
     $form->webform_password_textbox("Retype Password","password2","Type the password again..",true); 
@@ -71,15 +71,6 @@ function Add_User_Form()
     }
   
     $form->webform_option_menu("User Role","role",$roles_array,$roles_values); 
-
-    $form->webform_add_text_row("Sample text", true);
-    $form->webform_add_fieldrow_start();
-    $form->weform_checkbox("testvar","option name"); 
-    $form->weform_checkbox("testvar","option name 2", true);
-    $form->webform_add_fieldrow_end();
-    $form->webform_add_text_row("Sample text 2", true);
-    
-
     $form->webform_submit_button("Add User"); 
 
     return $form->webform_getForm();  

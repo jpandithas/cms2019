@@ -34,6 +34,12 @@ input[type=text], select, textarea {
     border-radius: 4px;
     cursor: pointer;
     float: right;
+    font-weight: bold;
+  }
+
+  input[type=submit]:hover{
+    background-color:rgb(61, 100, 151);
+    font-weight: bold;
   }
   
   /* Style the container */

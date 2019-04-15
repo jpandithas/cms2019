@@ -56,7 +56,7 @@ function Login()
 
 function login_form(){
     
-    $form = new Webform("","post","login-form"); 
+    $form = new Webform("login-form"); 
     $form->webform_textbox("Username","username",null,"Enter your username hare..",true);
     $form->webform_password_textbox("Password","password","Enter your password here..",TRUE); 
     $form->webform_submit_button("Login"); 

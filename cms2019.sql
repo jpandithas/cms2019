@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 13, 2019 at 10:15 PM
+-- Generation Time: Apr 15, 2019 at 06:10 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   `routeid` int(11) NOT NULL,
   `allowed` tinyint(1) NOT NULL,
   PRIMARY KEY (`permid`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='This is the permissions table';
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='This is the permissions table';
 
 --
 -- Dumping data for table `permissions`
@@ -59,7 +59,10 @@ INSERT INTO `permissions` (`permid`, `roleid`, `routeid`, `allowed`) VALUES
 (15, 1, 1, 0),
 (16, 1, 6, 1),
 (17, 2, 6, 1),
-(18, 3, 6, 1);
+(18, 3, 6, 1),
+(19, 1, 7, 0),
+(20, 2, 7, 1),
+(21, 3, 7, 0);
 
 -- --------------------------------------------------------
 
@@ -104,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `routes` (
   `system` tinyint(1) NOT NULL,
   `visible` tinyint(1) NOT NULL,
   PRIMARY KEY (`routeid`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `routes`
@@ -116,7 +119,8 @@ INSERT INTO `routes` (`routeid`, `action`, `type`, `id`, `mod_name`, `mod_displa
 (3, 'not_found', NULL, 0, 'not_found', '404', 'Page Not found Module', 1, 1, 0),
 (4, 'home', NULL, 0, 'home', 'Home', 'This is the home module for the CMS', 1, 1, 1),
 (5, 'logout', NULL, 0, 'logout', 'Logout', 'Logout from the CMS', 1, 1, 1),
-(6, 'denied', NULL, NULL, 'denied', 'Access Denied', 'Access Denied Page', 1, 1, 0);
+(6, 'denied', NULL, NULL, 'denied', 'Access Denied', 'Access Denied Page', 1, 1, 0),
+(7, 'manage', 'permissions', NULL, 'manage_permissions', 'Manage Permissions', 'This is the permissions manage Module', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -163,6 +167,28 @@ CREATE TABLE IF NOT EXISTS `theme_registry` (
 
 INSERT INTO `theme_registry` (`themeid`, `theme_name`, `theme_display_name`, `theme_desc`, `status`) VALUES
 (1, 'default', 'The Default Theme', 'This is the default theme, with standard functionality and structure. \r\nDO NOT REMOVE THIS THEME', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `topnav`
+--
+
+DROP TABLE IF EXISTS `topnav`;
+CREATE TABLE IF NOT EXISTS `topnav` (
+  `linkid` int(11) NOT NULL AUTO_INCREMENT,
+  `link_text` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `link_path` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `weight` int(11) NOT NULL,
+  PRIMARY KEY (`linkid`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `topnav`
+--
+
+INSERT INTO `topnav` (`linkid`, `link_text`, `link_path`, `weight`) VALUES
+(1, 'Home', 'home', 1);
 
 -- --------------------------------------------------------
 

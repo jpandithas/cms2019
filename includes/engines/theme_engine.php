@@ -33,7 +33,7 @@ function Page_Title()
 
 function Head_Navigation()
 {
-    print("HEAD NAVI"); 
+    print("<a href=".CMS_BASE_URL."?q=home> Home </a>" ); 
 }
 
 function Side_Navi()

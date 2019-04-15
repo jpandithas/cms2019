@@ -13,8 +13,7 @@ class Webform
      * @param string] $method
      * @param string $name
      */
-    public function __construct($action="", $method="post", $name)
-    {
+    public function __construct($name, $action="", $method="post"){
         if (strtolower($method)!="post" or strtolower($method)!="get") {$method="post";}
 
         $this->formdata = "<div class=form-container>"; 
@@ -29,9 +28,10 @@ class Webform
      * @param string $prefill_value
      * @param string $placeholder_hint
      * @param boolean $is_required
+     * @param boolean $is_disabled
      * @return void
      */
-    public function webform_textbox($display_text, $varname, $prefill_value=null, $placeholder_hint=null, $is_required=FALSE){
+    public function webform_textbox($display_text, $varname, $prefill_value=null, $placeholder_hint=null, $is_required=FALSE, $is_disabled=false){
         $this->formdata.="<div class='field-row'>";
         $this->formdata.="<div class='col-30'>"; 
         $this->formdata.="<label for={$varname}> {$display_text} </label>";
@@ -41,6 +41,7 @@ class Webform
         $this->formdata.="<input type='text' name='{$varname}' value='{$prefill_value}'";
         if (!empty($placeholder_hint)) {$this->formdata.=" placeholder='{$placeholder_hint}' ";}
         if ($is_required) {$this->formdata.=" required='required' ";}
+        if ($is_disabled) {$this->formdata.= " disabled ";}
         $this->formdata.=">"; 
 
         $this->formdata.="</div>"; 
@@ -91,15 +92,16 @@ class Webform
      *
      * @param string $display_text
      * @param string $varname
-     * @param Array $select_visible_options
-     * @param Array $select_values
+     * @param array $select_visible_options
+     * @param array $select_values
+     * @param boolean $is_disabled
      * @return void
      */
-    public function webform_option_menu($display_text, $varname, Array $select_visible_options, Array $select_values, $is_required=False){
+    public function webform_option_menu($display_text, $varname, Array $select_visible_options, Array $select_values, $is_required=False, $is_disabled=false){
         /**
          * checks the options if they match and sync them
          */
-        if ((count($select_values)==0)  or (count($select_visible_options) != count($select_visible_options))){
+        if ((count($select_values)==0)  or (count($select_visible_options) != count($select_values))){
             $select_values = $select_visible_options; 
         }
         $this->formdata.= "<div class='field-row'>";
@@ -109,6 +111,7 @@ class Webform
         $this->formdata.="<div class='col-70'>";
         $this->formdata.= "<select name = {$varname}";
         if ($is_required) {$this->formdata.=" required='required' ";}
+        if ($is_disabled) {$this->formdata.= " disabled ";}
         $this->formdata.=">";
         
         for ($key=0; $key < count($select_visible_options) ; $key++) {  
@@ -131,49 +134,89 @@ class Webform
      * @param string $prefill_value
      * @param string $placeholder
      * @param boolean $is_required
+     * @param boolean $is_disabled
      * @return void
      */
-    public function webform_textarea($display_text, $rows, $cols, $varname, $prefill_value, $placeholder=null, $is_required=false){
+    public function webform_textarea($display_text, $rows, $cols, $varname, $prefill_value, $placeholder=null, $is_required=false, $is_disabled=false){
         $this->formdata.= "<div class='field-row'>";
         $this->formdata.= "<div class='col-30'>"; 
         $this->formdata.= "<label for={$varname}> {$display_text} </label>";
         $this->formdata.= "</div>"; 
         $this->formdata.="<div class='col-70'>";
+
         $this->formdata.= "<textarea name={$varname} rows={$rows} cols={$cols}";
         if (!empty($placeholder)){$this->formdata.="placeholder={$placeholder}";}
         if ($is_required){$this->formdata.=" required='required' ";}
+        if ($is_disabled) {$this->formdata.= " disabled ";}
         $this->formdata.= "> {$prefill_value} </textarea>";
+
         $this->formdata.= "</div>"; 
         $this->formdata.= "</div>"; 
         $this->formvars[$varname] = $varname;
     }
 
     /**
-     * Adds a checkbox to the webform
+     * Adds a responsive checkbox to the webform
      *
      * @param string $varname
      * @param string $option_name
      * @param boolean $is_checked
      * @param boolean $is_required
+     * @param boolean $is_disabled
      * @return void
      */
-    public function weform_checkbox($varname, $option_name, $is_checked=False, $is_required=False){
+    public function weform_checkbox($varname, $option_name, $is_checked=False, $is_required=False, $is_disabled=false){
         $this->formdata.= "<div class='col-30'>"; 
         $this->formdata.= "</div>"; 
         $this->formdata.="<div class='col-70'>";
         $this->formdata.= "<input type='checkbox' name={$varname} class='form-checkbox'";
         if ($is_checked) {$this->formdata.= " checked='checked' ";}
         if ($is_required) {$this->formdata.= " required ='required'";}
+        if ($is_disabled) {$this->formdata.= " disabled ";}
         $this->formdata.= ">"; 
         $this->formdata.= "<label for='checkbox'>{$option_name}</label>";
         $this->formdata.= "</div>";
     }
 
+    /**
+     * Adds an inline checkbox to the form
+     *
+     * @param string $varname
+     * @param string $option_name
+     * @param boolean $is_checked
+     * @param boolean $is_required
+     * @param boolean $is_disabled
+     * @return void
+     */
+    public function webform_checkbox_inline($varname, $option_name, $is_checked=False, $is_required=False, $is_disabled=false)
+    {
+        $this->formdata.= "<input type='checkbox' name={$varname} class='form-checkbox'";
+        if ($is_checked) {$this->formdata.= " checked='checked' ";}
+        if ($is_required) {$this->formdata.= " required ='required'";}
+        if ($is_disabled) {$this->formdata.= " disabled ";}
+        $this->formdata.= ">"; 
+        $this->formdata.= "<label for='checkbox'>{$option_name}</label>";
+    }
+
+
+
+    /**
+     * Adds a Field Row to Group CheckBoxes and Radio Button.
+     * Use The webform_add_fieldrow_end() to close it
+     *
+     * @return void
+     */
     public function webform_add_fieldrow_start()
     {
         $this->formdata.= "<div class='field-row'>";
     }
 
+    /**
+     * Adds a Field Row END to Group CheckBoxes and Radio Button.
+     * Follows a webform_add_fieldrow_start() to close it
+     *
+     * @return void
+     */
     public function webform_add_fieldrow_end()
     {
         $this->formdata.= "</div>";
@@ -182,7 +225,7 @@ class Webform
      /**
      * Adds text to the Webform
      *
-     * @param [string] $text
+     * @param string $text
      * @return void
      */
     public function webform_add_text_row($text, $separator=False){

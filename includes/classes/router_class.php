@@ -8,8 +8,8 @@ class Router
     /**
      * Loads the module from the filesystem with optional namecheck
      *
-     * @param [string] $mod_name
-     * @return [void]
+     * @param string $mod_name
+     * @return void
      */
     public static function LoadModFromFiles($mod_name)
     {
@@ -17,6 +17,7 @@ class Router
         if (self::ModCanRun($mod_name)==false) return false;
 
         $module_path ="modules".DIRECTORY_SEPARATOR.$mod_name; 
+
         if (is_dir($module_path)){
             if(is_file($module_path.DIRECTORY_SEPARATOR.$mod_name.".php")){
                 include_once($module_path.DIRECTORY_SEPARATOR.$mod_name.".php");
@@ -31,8 +32,8 @@ class Router
     /**
      * Resolves module from an Instance of the URL class
      *
-     * @param [URL] $url
-     * @return [string]|[false]
+     * @param URL $url
+     * @return string|false
      */
     public static function ResolveModuleURL(URL $url){
         $url_array = $url->GetURLArray();
@@ -59,8 +60,8 @@ class Router
     /**
      * Check the routing table if a module exists
      *
-     * @param [string] $mod_name
-     * @return [string]|[false]
+     * @param string $mod_name
+     * @return string|false
      */
     public static function ModuleNameExists($mod_name){
         $query = new Query(new DB());
@@ -78,8 +79,8 @@ class Router
     /**
      * Checks if the module is system and enabled 
      *
-     * @param [string] $mod_name
-     * @return [boolean]
+     * @param string $mod_name
+     * @return boolean
      */
     public static function ModCanRun($mod_name)
     {

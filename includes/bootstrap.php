@@ -26,7 +26,11 @@ function boot()
     //var_dump(Security::UserIsLoggedIn());
    // var_dump($GLOBALS);
 
+   /**
+    * RENDER THE ACTIVE THEME
+    */
     $theme = Theme::GetActiveTheme(); 
+
     if (is_dir('themes'.DIRECTORY_SEPARATOR.$theme)){
         include_once('themes'.DIRECTORY_SEPARATOR.$theme.DIRECTORY_SEPARATOR.$theme.'.tpl.php');
     }

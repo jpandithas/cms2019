@@ -16,8 +16,12 @@ The following features should be supported:
 - [x] Boostraping capability 
 - [x] Router to support the Controller 
 - [x] Modular Design 
-- [x] Themes 
+- [x] Themes (Responsive)
 - [x] Database Connector Class 
+- [x] User Roles
+- [x] Permissions System
+- [x] Manage Permission
+- [x] Home Page, 404 and 403 Pages
 - [x] Query ORM 
 - Queries:
   - [x] Insert 
@@ -29,9 +33,15 @@ The following features should be supported:
   - [x] Or Clause 
   - [x] Limit Clause 
   - [x] Order By
-  -[x] User Roles
-  -[x] Permissions System
-  -[x] Manage Permissions
-  -[x] Home Page, 404 and 403 Pages
+- Webform Builder
+  - [x] Radio Button
+  - [x] Checkbox 
+  - [x] Text Field
+  - [x] Password Field
+  - [x] Text Area
+  - [x] Submit Button
+  - [x] Select Menu 
+  - [x] Text to Accompany Form 
+  - [x] Field Separator
   
   

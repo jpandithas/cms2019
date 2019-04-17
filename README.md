@@ -1,11 +1,11 @@
-# cms2019
+# cms2019 (Project Plastelline) 
 The 2019 version of the CMS for the Engineering Courses of NYC
 
 ## Notice: 
 Download the database of the project
 
 ## Idea
-The idea behind this project is to create an easy to build CMS that is based on an MVC pattern 
+The idea behind this project is to create an easy to build CMS that is based on an MVC pattern, ideal for those who wish to build their first web application and learn OOPHP and Systems development alogn the way. 
 
 ## Codebase
 Object Oriented PHP

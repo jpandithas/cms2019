@@ -27,14 +27,19 @@ if (array_key_exists('id',$url_components)) {
 
 if (isset($_POST['submit']) and $_POST['submit']="Select Role"){
     if ($_POST['role']=='2') {
-    Append_Content("<h3 class='warning-bar'>Administrators: Careful with your own permissions</h3>"); 
+        Append_Content("<h3 class='warning-bar'>Administrators: Careful with your own permissions</h3>"); 
     }
     Append_Content(permissions_table($_POST['role']));
 }
 
 }
 
-
+/**
+ * Role Selection form
+ *
+ * @param array $roles
+ * @return void
+ */
 function role_selection_form(array $roles)
 {
     $form = new Webform('roles-form');
@@ -49,6 +54,12 @@ function role_selection_form(array $roles)
     return $form->webform_getForm();  
 }
 
+/**
+ * Permissions table for a role
+ *
+ * @param int $role
+ * @return void
+ */
 function permissions_table($role){
     $query = new Query(new DB()); 
     $query->SetTableName('permissions'); 
@@ -76,10 +87,10 @@ function permissions_table($role){
     $query= null; 
 
         $table= "<table class='permissions-table' border=1>"; 
-        $table.= "<thead> <tr> <th class='section-header' colspan=3>{$role_name[0]['role_display_name']}</th></tr>";
+        $table.= "<thead> <tr> <th class='th-section-header' colspan=3>{$role_name[0]['role_display_name']}</th></tr>";
         $table.= "<tr> <th> Module </th> <th> Permission </th><th> Action </th></tr> </thead>"; 
         foreach ($permissions as $permission_row){
-            
+                $table.="<tr>"; 
                foreach ($routes as $route_row){
                     if ($permission_row['routeid']==$route_row['routeid']){
                         $module_name = $route_row['mod_display_name'];
@@ -103,6 +114,12 @@ function permissions_table($role){
     return $table;
 }
 
+/**
+ * Edit Permission form
+ *
+ * @param int $id
+ * @return void
+ */
 function edit_permission_form($id)
 {
     $query= new Query(new DB()); 

@@ -17,6 +17,8 @@ function Show_links_table()
     $query->Run(); 
     $result= $query->GetReturnedRows();
 
+    
+    
     $rows = $result[0]; 
         
 }

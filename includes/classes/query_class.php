@@ -3,6 +3,7 @@
 /**
  * Query class
  * PDO Wrapper that provides QoL for small/medium queries
+ * 
  */
 class Query
 {
@@ -10,7 +11,7 @@ class Query
     /**
      * table variable
      *
-     * @var [string]
+     * @var string
      */
     protected $table;
     protected $db;
@@ -29,8 +30,8 @@ class Query
     /**
      * Set the target table for the queries 
      *
-     * @param [string] $table_name
-     * @return [Query]
+     * @param string $table_name
+     * @return Query
      */
     public function SetTableName($table_name)
     {
@@ -42,8 +43,8 @@ class Query
     /**
      * Insert SQL statement 
      *
-     * @param [array] $values
-     * @return [integer] 
+     * @param array $values
+     * @return integer 
      */
     public function Insert(array $values)
     {
@@ -78,8 +79,8 @@ class Query
    /**
     * Update SQL statemet wrapper
     *
-    * @param [array] $fields_values
-    * @return [Query]
+    * @param array $fields_values
+    * @return Query
     */
    public function Update(array $fields_values)   
    {
@@ -120,9 +121,9 @@ class Query
     /**
      * Select SQL statement
      *
-     * @param [array] $fields_array
+     * @param array $fields_array
      *
-     * @return [Query]
+     * @return Query
      */
     public function Select(array $fields_array)
     {
@@ -149,7 +150,7 @@ class Query
      *
      * @param array $where_clause
      *
-     * @return [Query]
+     * @return Query
      */
     public function Where(array $where_clause)
     {
@@ -168,7 +169,7 @@ class Query
      *
      * @param array $clause
      *
-     * @return [Query]
+     * @return Query
      */
     public function AndClause(array $clause)
     {
@@ -182,8 +183,8 @@ class Query
     /**
      * Or Clause for the queries 
      * 
-     * @param [array] $clause
-     * @return [Query]
+     * @param array $clause
+     * @return Query
      */
     public function OrClause(array $clause)
     {
@@ -197,10 +198,10 @@ class Query
     /**
      * Limit Clause for the queries
      *
-     * @param [integer] $rows
-     * @param [integer] $offset
+     * @param integer $rows
+     * @param integer $offset
      *
-     * @return [Query]
+     * @return Query
      */
     public function Limit($rows, $offset=null)
     {
@@ -219,9 +220,9 @@ class Query
     /**
      * OrderBy Clause for the queries
      *
-     * @param [array] $fields
-     * @param [string] $order
-     * @return [Query]
+     * @param array $fields
+     * @param string $order
+     * @return Query
      */
     public function OrderBy(array $fields, $order="ASC")
     {
@@ -246,7 +247,7 @@ class Query
     /**
      * Runs the Query and updates the class members
      * 
-     * @return [Query]
+     * @return Query
      */
     public function Run()
     {
@@ -265,7 +266,7 @@ class Query
     /**
      * Return the error code if a query fails
      *
-     * @return [string] | [false]
+     * @return string | false
      */
     public function GetErrorCode()
     {
@@ -279,7 +280,7 @@ class Query
     /**
      * Get LastInsert ID if an insert is issued
      *
-     * @return [integer]|[false]
+     * @return integer|false
      */
     public function GetLastInsertId()
     {
@@ -292,7 +293,7 @@ class Query
     /**
      * Get Returned Rows from a SELECT query
      *
-     * @return [array]|[false]
+     * @return array|false
      */
     public function GetReturnedRows()
     {
@@ -306,7 +307,7 @@ class Query
     /**
      * return the SQL code for the query issued
      *
-     * @return [string]
+     * @return string
      */
     public function getSQL()
     {

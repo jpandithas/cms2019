@@ -19,6 +19,8 @@ function boot()
         $_SESSION['role'] = 1;
     }
     
+    
+
     RouteListener();
 
     //var_dump(Security::Authenticate('admin','admin'));

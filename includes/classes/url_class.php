@@ -8,7 +8,6 @@ class URL
     protected $id;
     protected $url_component_array = array();
 
-
     public function __construct()
     {
         $this->ReadGET(); 
@@ -31,8 +30,8 @@ class URL
     /**
      * Processes the URL and updates the URL class 
      *
-     * @param [string] $url
-     * @return [URL]
+     * @param string $url
+     * @return URL
      */
     protected function ProcessURL($url)
     {
@@ -49,18 +48,20 @@ class URL
                 $this->type = $url_array[1];
                 $this->url_component_array['type'] = $url_array[1];
             }
-            if (!empty($url_array[2])) 
+
+            if (!empty($url_array[2]) and is_numeric($url_array[2]))
             {
                 $this->id = $url_array[2];
                 $this->url_component_array['id'] = $url_array[2];
             }
+
             return $this;
     }
 
     /**
      * Converts a URL to a string path
      *
-     * @return [string]
+     * @return string
      */
     public function URLtoPath()
     {
@@ -82,7 +83,7 @@ class URL
     /**
      * Returns the url components into array format
      *
-     * @return [array]
+     * @return array
      */
     public function GetURLArray()
     {
@@ -92,7 +93,7 @@ class URL
     /**
      * Returns the URI of the current URL status
      *
-     * @return [string]
+     * @return string
      */
     public function GetCurrentURI()
     {
@@ -107,7 +108,7 @@ class URL
     /**
      * Sets the current URL
      *
-     * @param [string] $url_path
+     * @param string $url_path
      * @return [void]
      */
     public function SetURL($url_path)
@@ -121,7 +122,7 @@ class URL
     /**
      * Rredirects the System internally
      *
-     * @param [string] $path
+     * @param string $path
      * @return [void]
      */
     public function InternalRedirect($path = null)

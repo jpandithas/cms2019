@@ -120,6 +120,91 @@ class Security
         if ($isallowed == 1) return TRUE; 
 
     }
+    /**
+     * Gets the users list in an array: 
+     * uid,username,role
+     *
+     * @return void
+     */
+    public static function Get_Users_Array()
+    {
+        $query= new Query(new DB()); 
+        $query->SetTableName('user'); 
+        $query->Select(['uid','username','role']); 
+        $query->OrderBy(['role'],"DESC");
+        $query->Run(); 
+        $result= $query->GetReturnedRows(); 
+        $query= null; 
+        $users= array(); 
+
+        foreach ($result as $row){
+            $users[]= [
+                'uid'=>$row['uid'],
+                'username'=>$row['username'],
+                'role'=>$row['role']
+            ];
+        }
+        return $users; 
+
+    }
+
+    /**
+     * Gets the Roles in an Array:
+     * roleid,role_name,role_display_name,role_description
+     *
+     * @param boolean $remove_anoymous
+     * @return void
+     */
+    public static function Get_Roles_Array($remove_anoymous=false)
+    {
+        $query= new Query(new DB()); 
+        $query->SetTableName('roles'); 
+        $query->Select(['roleid','role_name','role_display_name','role_description']); 
+        if ($remove_anoymous){
+            $query->Where(['roleid','>','1']); 
+        }
+        $query->OrderBy(['roleid'],"DESC");
+        $query->Run(); 
+        $result= $query->GetReturnedRows(); 
+        $query= null; 
+        $roles= array(); 
+
+        foreach ($result as $row){
+            $roles[]= [
+                'roleid'=>$row['roleid'],
+                'role_name'=>$row['role_name'],
+                'role_display_name'=>$row['role_display_name'],
+                'role_description'=>$row['role_description']
+            ];
+        }
+        return $roles; 
+
+    }
+
+    /**
+     * Gets the user from the user ID
+     *
+     * @param integer $uid
+     * @return void
+     */ 
+    public static function Get_User_From_id($uid)
+    {
+        if (!is_numeric($uid)) {return false;}
+
+        $query= new Query(new DB()); 
+
+        $query->SetTableName('user');
+        $query->Select(['uid','username','role']);
+        $query->Where(['uid','=',$uid]);  
+        $query->Limit(1);
+        $query->Run(); 
+
+        $result= $query->GetReturnedRows(); 
+        if ($result){
+            return $result[0];
+        }
+        return false; 
+    }
 }
 
 ?>

@@ -5,50 +5,59 @@
 */
 function boot()
 {
-    /**
-     * Autoloader for Classes and Engines
-     */
+    #Loas the Settings from the file
     LoadSettings();
+   
+    #Autoloader for Classes and Engines 
     Autoload_Classes_Engines();
-    # Write Below This Line
+   
+   /************ Write Below This Line ********************************************************/
     
-    /**
-     * Check if user is Anonymous
-     */
-    if (Security::UserIsLoggedIn()== FALSE) {
-        $_SESSION['role'] = 1;
-    }
-    
+    #Test the DB connection 
+    $db= new DB();
+    if ($db->GetDBError()==true) {
+        $error= $db->GetDBError(); 
+        $db= null; 
+        print(ErrorPage("Database Error", $error)); 
+        return false; 
+        }
+    $db= null; 
+
+    #Check if user is Anonymous 
+    CheckAnonymousUser(); 
     
 
+    $url= new URL();
+    //var_dump($url->URLtoPath());
+    //var_dump($url->GetURLArray()); 
+    
+    #Listen for Routes
     RouteListener();
 
-    //var_dump(Security::Authenticate('admin','admin'));
-    //var_dump($_SESSION);
-    //var_dump(Security::UserIsLoggedIn());
-   // var_dump($GLOBALS);
+   // var_dump($_SESSION);
+    //var_dump($GLOBALS);
 
-   /**
-    * RENDER THE ACTIVE THEME
-    */
+   /******** DO NOT WRITE ANY CODE BELOW THIS LINE ********************************************/
+   
+    #RENDER THE ACTIVE THEME
     $theme = Theme::GetActiveTheme(); 
-
     if (is_dir('themes'.DIRECTORY_SEPARATOR.$theme)){
         include_once('themes'.DIRECTORY_SEPARATOR.$theme.DIRECTORY_SEPARATOR.$theme.'.tpl.php');
     }
 
-    
+    #END BOOSTSTRAP 
 }
 
  /**
      * Listens for a URL and Loads the module. Useful for bootstrapping
      *
-     * @param [URL] $url
+     * @param URL $url
      * @return void
      */
     function RouteListener(){
         $url = new URL();
         
+
         if (count($url->GetURLArray()) == 0){
            $url->InternalRedirect('home'); 
            return false; 
@@ -58,6 +67,7 @@ function boot()
 
         if (Security::UserHasPerMission($mod_name)==False) {
             $url->InternalRedirect('denied');
+            return false; 
         } 
         
         if ($mod_name == true){
@@ -70,14 +80,37 @@ function boot()
         }
     }
 
-/*
-* DB tester Function
-* This returns the state of the DB
-* REFACTOR
-*/
-function TestDB()
+function CheckAnonymousUser()
 {
-   #TODO
+    if (Security::UserIsLoggedIn()== FALSE) {
+        $_SESSION['role'] = 1;
+        return true; 
+    }
+    return false; 
+}
+
+/*
+* Error Message Function
+* 
+*/
+function ErrorPage($message_head,$error)
+{
+    $css= "<style>html {font-family: Arial; background:lightblue;} </style>"; 
+    $html_head= "<!DOCTYPE html> <html> <head>";
+    $html_head.= "<title> Plastelline | Error </title>";
+    $html_head.= "</head>";
+
+    $html_body= "<body>"; 
+    $html_body.= $css; 
+    $html_body.= "<h1> Plastelline </h1>";
+    $html_body.= "<fieldset> <legend> <h2 style='background-color: pink;'> $message_head </h2> </legend>";
+    $html_body.= "<h4> The CMS Cannot Continue. Please consult an administrator mentioning the error message below:</h4>"; 
+    $html_body.= "<h3 style='color:red;'> {$error} </h3>";
+    $html_body.= "</legend>";
+
+    $html_closure= "</html>"; 
+
+    return $html_head.$html_body.$html_closure; 
 }
 
 /**

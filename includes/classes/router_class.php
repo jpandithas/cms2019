@@ -3,8 +3,6 @@
 class Router 
 {
 
-   
-
     /**
      * Loads the module from the filesystem with optional namecheck
      *

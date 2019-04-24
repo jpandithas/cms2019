@@ -34,6 +34,7 @@ function Page_Title()
 function Head_Navigation()
 {
     print("<a href=".CMS_BASE_URL."?q=home> Home </a>" ); 
+    Main_Navigation::ShowActiveLanguage(); 
 }
 
 function Side_Navi()

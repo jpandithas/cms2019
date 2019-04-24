@@ -40,7 +40,7 @@ html, body {
 /* NAVBAR SETTINGS */ 
 
 .head-navi {
-    padding: 15px; 
+    padding: 10px; 
     overflow: hidden;
     top:0; 
     background-color: #ffb151;
@@ -50,11 +50,11 @@ html, body {
 
   .head-navi a{
       overflow: hidden; 
-      padding: 15px;
+      padding: 10px;
       text-decoration: none;
       color: white; 
       font-weight: bolder; 
-      font-size: 1.2vw; 
+      
   }
   
   .head-navi a:hover {
@@ -67,6 +67,34 @@ html, body {
     background-color: rgb(84, 166, 233);
     color: white;
   }
+
+/** LANGUAGE BAR **/
+
+ .language-bar{
+    float: right;
+}
+a.lang  {
+    overflow: hidden;
+    padding: 15px; 
+    background-color: rgba(200, 200, 200, 0.8)
+}
+
+a.lang-current {
+    overflow: hidden;
+    padding: 15px; 
+    background-color: dodgerblue; 
+}
+
+a.lang:hover {
+    background: #976200; 
+    border-right: 1px solid #c58000;
+}
+
+a.lang-current:hover {
+    background: #1763af;
+    border-right: 1px solid #208fff;
+}
+
 
 /* CONTENT AREA */ 
 
@@ -265,6 +293,9 @@ span.red {
     font-weight: bolder;
 }
 
+
+
+
 /* Renders the collaspible menu */
 
 .collapsible {
@@ -324,4 +355,5 @@ input:checked ~ #menu {
     .logo{
         display: none; 
     }
+    
   }

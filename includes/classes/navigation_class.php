@@ -2,7 +2,34 @@
 
 class Main_Navigation {
 
-    public static function Render_Menu(){
+    public static function ShowActiveLanguage()
+    {
+        if (LOCALES_ENABLED==False) return False; 
+
+        $lang_array= Language::GetLocalesArray();
+        $url= new URL();
+
+        $html="<div class='language-bar'>";
+        foreach ($lang_array as $lang){
+            if ($lang['lang_descriptor']==Language::GetCurrentLocale())
+            {
+                $class= " class='lang-current'"; 
+            } else {
+                $class= " class='lang'";  
+            }
+
+            $link= "<a {$class} href='".CMS_BASE_URL."?q=".$url->URLtoPath($lang['lang_descriptor'])."'>"; 
+            $link.= $lang['lang_descriptor'];
+            $link.= "</a>";
+
+           $html.= $link; 
+        } 
+        $html.= "</div>"; 
+        print($html); 
+    }
+
+    public static function Render_Menu()
+    {
         
         $query = new Query(new DB()); 
         $query->SetTableName("routes"); 
@@ -35,6 +62,8 @@ class Main_Navigation {
         }
         $html .= "</ul>"; 
         $html .="</div>";
+
+
         print($html); 
     }
 
@@ -42,8 +71,11 @@ class Main_Navigation {
     {
         if (Security::UserIsLoggedIn())
         {
+            $strings=['en'=>'User','el'=>'Χρήστης'];
+            tt_register($strings); 
+        
             $html = "<h3 class='sidebar-row' id='user-hello'>";
-            $html .= "User: ".$_SESSION['username'];
+            $html .= tt("User").": ".$_SESSION['username'];
             $html .= "</h3>"; 
             print($html); 
         }

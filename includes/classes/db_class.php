@@ -5,19 +5,19 @@ class DB
     /**
      * DBConnection variable
      *
-     * @var [PDOStatement]
+     * @var PDOStatement
      */
     protected $DBConnection;
     /**
      * DBError variable
      *
-     * @var [string]
+     * @var string
      */
     protected $DBError; 
     /**
      * ISConnected variable
      *
-     * @var [boolean]
+     * @var boolean
      */
     protected $IsConnected; 
 
@@ -50,7 +50,7 @@ class DB
     /**
      * GetDBConnection function
      *
-     * @return [PDOStatement]|[false]
+     * @return PDOStatement|false
      */
     public function GetDBConnection()
     {
@@ -61,7 +61,7 @@ class DB
     /**
      * GetDBError function
      *
-     * @return [string]|[false]
+     * @return string|false
      */
     public function GetDBError ()
     {
@@ -70,15 +70,15 @@ class DB
     }
 
     /**
-     * DBQPrepStatement function
+     * Sends a raw DB Prepared Statement Query
      *
-     * @param [string] $query
+     * @param string $query
      * @param array $params
      * @param boolean $return_value
      * @param boolean $return_insert_id
      * @return mixed
      */
-    public function DBQPrepStatement($query, array $params, $return_value=false, $return_insert_id=false)
+    public function DBQ_Prep_Statement($query, array $params, $return_value=false, $return_insert_id=false)
     {
     
        if ($this->IsConnected == false) return false;

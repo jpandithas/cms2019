@@ -10,4 +10,8 @@ define("DB_USER","root");
 //for your systems you may leave this value as ""
 //check with your db first
 define("DB_PASSWORD","root1234");
+# Enable this if you wish to use Mulilingual Capabilities
+# The site defaults to English 'en' if any errors take place 
+# path prefix is akin to ?q=en/action/type/id
+define("LOCALES_ENABLED",true); 
 ?>

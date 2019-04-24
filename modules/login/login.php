@@ -6,14 +6,16 @@
  */
 function Login()
 {
-    Append_Title("Login");
-    Append_Content("<h2> Login Page </h2>"); 
+    include('login.lang.php'); 
 
-    if (isset($_POST['submit']) and ($_POST['submit']=='Login'))
+    Append_Title("Login");
+    Append_Content("<h2> ".tt('Login Page')." </h2>"); 
+
+    if (isset($_POST['submit']) and ($_POST['submit']==tt('Login')))
     {
         
         if (empty($_POST['username']) or empty($_POST['password'])){
-            Append_Content("<h4 class='error-bar'> Login Failed </h4>");
+            Append_Content("<h4 class='error-bar'> ".tt('Login Failed')." </h4>");
             Append_Content(login_form()); 
             return FALSE; 
         }
@@ -40,7 +42,7 @@ function Login()
         }
         else 
         {
-            Append_Content("<h4 class='error-bar'> &#9888; Login Failed </h4>");          
+            Append_Content("<h4 class='error-bar'> &#9888; ".tt('Login Failed')." </h4>");          
         }
     }
 
@@ -56,10 +58,11 @@ function Login()
 
 function login_form(){
     
+
     $form = new Webform("login-form"); 
-    $form->webform_textbox("Username","username",null,"Enter your username hare..",true);
-    $form->webform_password_textbox("Password","password","Enter your password here..",TRUE); 
-    $form->webform_submit_button("Login"); 
+    $form->webform_textbox(tt("Username"),"username",null,tt('Enter your username hare..'),true);
+    $form->webform_password_textbox(tt("Password"),"password",tt('Enter your password here..'),TRUE); 
+    $form->webform_submit_button(tt('Login')); 
     $form_warp_end = "</div>";
     return $form->webform_getForm(); 
 }

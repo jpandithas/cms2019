@@ -26,6 +26,11 @@ class Query
     {
         $this->db = $db;
     }
+
+    public function __destruct()
+    {
+        $this->db= null; 
+    }
     
     /**
      * Set the target table for the queries 

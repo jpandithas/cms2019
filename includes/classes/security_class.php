@@ -42,7 +42,7 @@ class Security
         $query->SetTableName('user'); 
         $query->Select(['uid']); 
         $query->Where(['username','=',$usenrame]);
-        $query->AndClause(['password','=',self::Password($password)]); 
+        $query->AND_(['password','=',self::Password($password)]); 
         $query->Limit(1); 
         $query->Run(); 
 
@@ -107,7 +107,7 @@ class Security
         $query->SetTableName('permissions'); 
         $query->Select(['allowed']); 
         $query->Where(['routeid','=',$rid]);
-        $query->AndClause(['roleid','=',$_SESSION['role']]);
+        $query->AND_(['roleid','=',$_SESSION['role']]);
         $query->Limit(1); 
         $query->Run(); 
         

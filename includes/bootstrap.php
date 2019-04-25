@@ -10,6 +10,8 @@ function boot()
    
     #Autoloader for Classes and Engines 
     Autoload_Classes_Engines();
+
+    Autoload_System_Translations();
    
    /************ Write Below This Line ********************************************************/
     
@@ -25,6 +27,7 @@ function boot()
 
     #Check if user is Anonymous 
     CheckAnonymousUser(); 
+    
     
 
     $url= new URL();
@@ -46,6 +49,8 @@ function boot()
     }
 
     #END BOOSTSTRAP 
+
+    var_dump(memory_get_usage(false)/1024);
 }
 
  /**
@@ -144,6 +149,17 @@ function Autoload_Classes_Engines()
      { 
         include_once($path);
      }    
+    }
+}
+
+function Autoload_System_Translations()
+{
+    $path='includes'.DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'core_translations'.DIRECTORY_SEPARATOR.'*.lang.php';
+    $files= glob($path); 
+    foreach ($files as $file) {
+        if(is_readable($file) and !is_uploaded_file($file)){
+            include_once($file); 
+        }
     }
 }
 

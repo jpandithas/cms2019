@@ -4,6 +4,8 @@
  * Query class
  * PDO Wrapper that provides QoL for small/medium queries
  * 
+ * TODO: HAVING clause, GROUP BY (count) ,JOIN
+ * 
  */
 class Query
 {
@@ -176,7 +178,7 @@ class Query
      *
      * @return Query
      */
-    public function AndClause(array $clause)
+    public function AND_(array $clause)
     {
         if (!is_array($clause) or count($clause) != 3) return false;
         if (!isset($this->sql)) return false;
@@ -191,7 +193,7 @@ class Query
      * @param array $clause
      * @return Query
      */
-    public function OrClause(array $clause)
+    public function OR_(array $clause)
     {
         if (!is_array($clause) or count($clause) != 3) return false;
         if (!isset($this->sql)) return false;
@@ -246,6 +248,36 @@ class Query
             $count++; 
         }
          $this->sql.= " ".strtoupper($order);
+        return $this;
+    }
+
+    /**
+     * Inner Join *Requires an ON Clause
+     *
+     * @param string $table
+     * @return Query
+     */
+    public function Inner_Join($table){
+        if(empty($table) or !is_string($table) ) return false; 
+        if(!isset($this->sql)) return false; 
+
+        $this->sql.= " INNER JOIN `{$table}` ";
+        return $this; 
+    }
+
+    /**
+     * ON Clause for JOINs
+     *
+     * @param array $expression
+     * @return void
+     */
+    public function On_(array $expression)
+    {
+        if (!is_array($expression) or count($expression)==0) return false;
+        if (count($expression) != 3) return false;
+        if (!isset($this->sql)) return false;
+
+        $this->sql .= " ON ".$expression[0]." ".$expression[1]." ".$expression[2];
         return $this;
     }
 

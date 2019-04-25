@@ -79,7 +79,7 @@ function edit_user_form()
     $query->SetTableName('roles');
     $query->Select(['roleid','role_display_name']);
     $query->Where(['roleid','>',1]);
-    $query->AndClause(['roleid','!=',$user_array['role']]);
+    $query->AND_(['roleid','!=',$user_array['role']]);
     $query->Run();
     $roles_array= $query->GetReturnedRows(); 
 

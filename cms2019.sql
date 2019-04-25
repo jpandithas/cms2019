@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 24, 2019 at 09:20 AM
+-- Generation Time: Apr 25, 2019 at 10:17 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -31,13 +31,13 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `languages`;
 CREATE TABLE IF NOT EXISTS `languages` (
   `langid` int(11) NOT NULL AUTO_INCREMENT,
-  `lang_descriptor` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `lang_display_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `lang_native_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `lang_descriptor` varchar(255) NOT NULL,
+  `lang_display_name` varchar(255) NOT NULL,
+  `lang_native_name` varchar(255) NOT NULL,
   `lang_status` tinyint(1) NOT NULL,
   `lang_default` tinyint(1) NOT NULL,
   PRIMARY KEY (`langid`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `languages`
@@ -46,6 +46,34 @@ CREATE TABLE IF NOT EXISTS `languages` (
 INSERT INTO `languages` (`langid`, `lang_descriptor`, `lang_display_name`, `lang_native_name`, `lang_status`, `lang_default`) VALUES
 (1, 'en', 'English', 'English', 1, 1),
 (2, 'el', 'Greek', 'Ελληνικά', 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `module_translations`
+--
+
+DROP TABLE IF EXISTS `module_translations`;
+CREATE TABLE IF NOT EXISTS `module_translations` (
+  `trid` int(11) NOT NULL AUTO_INCREMENT,
+  `routeid` int(11) NOT NULL,
+  `mod_display_name` varchar(255) NOT NULL,
+  `mod_desc` varchar(255) NOT NULL,
+  `lang` varchar(255) NOT NULL,
+  PRIMARY KEY (`trid`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `module_translations`
+--
+
+INSERT INTO `module_translations` (`trid`, `routeid`, `mod_display_name`, `mod_desc`, `lang`) VALUES
+(1, 1, 'Προσθήκη Χρήστη', 'Προσθήκη Χρήστη στο Σύστημα', 'el'),
+(2, 2, 'Εισοδος', 'Είσοδος στο Σύτημα', 'el'),
+(3, 4, 'Αρχική', 'Αρχική Σελίδα', 'el'),
+(4, 5, 'Έξοδος', 'Έξοδος από το σύστημα', 'el'),
+(5, 7, 'Διαχείρηση Προνομίων', 'Διαχείριση Προωομίωω των Κατηγοριών των χρηστών', 'el'),
+(6, 8, 'Επεξεργασία Χρήστη', 'Επεξεργασία Χρηστών', 'el');
 
 -- --------------------------------------------------------
 
@@ -60,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   `routeid` int(11) NOT NULL,
   `allowed` tinyint(1) NOT NULL,
   PRIMARY KEY (`permid`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='This is the permissions table';
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='This is the permissions table';
 
 --
 -- Dumping data for table `permissions`
@@ -101,11 +129,11 @@ INSERT INTO `permissions` (`permid`, `roleid`, `routeid`, `allowed`) VALUES
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE IF NOT EXISTS `roles` (
   `roleid` int(11) NOT NULL AUTO_INCREMENT,
-  `role_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `role_display_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `role_description` text COLLATE utf8_unicode_ci,
+  `role_name` varchar(255) NOT NULL,
+  `role_display_name` varchar(255) NOT NULL,
+  `role_description` text,
   PRIMARY KEY (`roleid`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `roles`
@@ -125,17 +153,17 @@ INSERT INTO `roles` (`roleid`, `role_name`, `role_display_name`, `role_descripti
 DROP TABLE IF EXISTS `routes`;
 CREATE TABLE IF NOT EXISTS `routes` (
   `routeid` int(11) NOT NULL AUTO_INCREMENT,
-  `action` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `action` varchar(255) NOT NULL,
+  `type` varchar(255) DEFAULT NULL,
   `id` tinyint(1) DEFAULT NULL,
-  `mod_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `mod_display_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `mod_desc` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `mod_name` varchar(255) NOT NULL,
+  `mod_display_name` varchar(255) NOT NULL,
+  `mod_desc` varchar(255) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `system` tinyint(1) NOT NULL,
   `visible` tinyint(1) NOT NULL,
   PRIMARY KEY (`routeid`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `routes`
@@ -160,12 +188,12 @@ INSERT INTO `routes` (`routeid`, `action`, `type`, `id`, `mod_name`, `mod_displa
 DROP TABLE IF EXISTS `theme_registry`;
 CREATE TABLE IF NOT EXISTS `theme_registry` (
   `themeid` int(11) NOT NULL AUTO_INCREMENT,
-  `theme_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `theme_display_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `theme_desc` text COLLATE utf8_unicode_ci NOT NULL,
+  `theme_name` varchar(255) NOT NULL,
+  `theme_display_name` varchar(255) NOT NULL,
+  `theme_desc` text NOT NULL,
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`themeid`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `theme_registry`
@@ -183,11 +211,11 @@ INSERT INTO `theme_registry` (`themeid`, `theme_name`, `theme_display_name`, `th
 DROP TABLE IF EXISTS `topnav`;
 CREATE TABLE IF NOT EXISTS `topnav` (
   `linkid` int(11) NOT NULL AUTO_INCREMENT,
-  `link_text` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `link_path` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `link_text` varchar(255) NOT NULL,
+  `link_path` varchar(255) NOT NULL,
   `weight` int(11) NOT NULL,
   PRIMARY KEY (`linkid`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `topnav`
@@ -205,11 +233,11 @@ INSERT INTO `topnav` (`linkid`, `link_text`, `link_path`, `weight`) VALUES
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `role` tinyint(4) NOT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
@@ -229,10 +257,10 @@ INSERT INTO `user` (`uid`, `username`, `password`, `role`) VALUES
 DROP TABLE IF EXISTS `variables`;
 CREATE TABLE IF NOT EXISTS `variables` (
   `vid` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `value` text COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `value` text NOT NULL,
   PRIMARY KEY (`vid`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `variables`

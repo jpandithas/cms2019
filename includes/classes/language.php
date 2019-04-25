@@ -82,19 +82,44 @@ class Language
         return false; 
     }
 
-    public static Function translate($translated_string){
 
-        if (!LOCALES_ENABLED and !empty($_SESSION['strings'])) return false; 
 
-        $strings= $GLOBALS['strings']; 
+    public static Function translate($string_to_translate)
+    {
+        if (!LOCALES_ENABLED ) return false; 
+
+        $strings= $GLOBALS['strings'];         
 
         $lang= Language::GetCurrentLocale();
         foreach($strings as $string){
             foreach ($string as $lang_key=>$text){
-                 if ($translated_string==$text) return ($string[$lang]);           
+                 if ($string_to_translate==$text) return ($string[$lang]);           
          }
       }
     }
+
+    public static function GetModuleTranslations(){
+        $query= new Query(new DB()); 
+        $query->SetTableName('module_translations'); 
+        $query->Select(['module_translations.routeid', 
+                        'module_translations.mod_display_name',
+                        'module_translations.lang', 
+                        'routes.mod_display_name']); 
+        $query->Inner_Join('routes');
+        $query->On_(['routes.routeid','=','module_translations.routeid']);
+        $query->Run();
+
+        $result= $query->GetReturnedRows();
+        $mods_strings= array();
+
+        foreach ($result as $row){
+            $mods_strings[]=['en'=>$row['mod_display_name'],$row['lang']=>$row[1]];
+        }
+        
+        return $mods_strings; 
+        
+    }
+
 }
 
 ?>

@@ -30,12 +30,14 @@ class Main_Navigation {
 
     public static function Render_Menu()
     {
-        
+    
+       if (LOCALES_ENABLED) tt_register(Language::GetModuleTranslations());
+
         $query = new Query(new DB()); 
         $query->SetTableName("routes"); 
-        $query->Select(['action','type','mod_display_name','mod_name']); 
+        $query->Select(['routeid','action','type','mod_display_name','mod_name']); 
         $query->Where(['status','=','1']);
-        $query->AndClause(['visible','=','1']); 
+        $query->AND_(['visible','=','1']); 
         $query->OrderBy(['mod_display_name']); 
         $query->Run(); 
 
@@ -43,7 +45,7 @@ class Main_Navigation {
         
         
         $html = "<input type='checkbox' id='menu'>";
-        $html .= "<label for='menu'><b>Navigation</b></label>";
+        $html .= "<label for='menu'><b>".tt('Navigation')."</b></label>";
         $html .= "<div id='menu' class='collapsible'>";
         $html .= "<ul id='main-nav' class='nav'>";
         foreach ($result as $row) {
@@ -57,7 +59,7 @@ class Main_Navigation {
             if (!empty($row['type'])) {
                 $html .= "/".$row['type'];
             }
-            $html.=">".$row['mod_display_name']."</a>";
+            $html.=">".tt($row['mod_display_name'])."</a>";
             $html.="</li>";
         }
         $html .= "</ul>"; 
@@ -71,9 +73,6 @@ class Main_Navigation {
     {
         if (Security::UserIsLoggedIn())
         {
-            $strings=['en'=>'User','el'=>'Χρήστης'];
-            tt_register($strings); 
-        
             $html = "<h3 class='sidebar-row' id='user-hello'>";
             $html .= tt("User").": ".$_SESSION['username'];
             $html .= "</h3>"; 

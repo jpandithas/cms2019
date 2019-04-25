@@ -43,7 +43,7 @@ class Router
         $query->Where(["action","=",$url_array['action']]);
 
         if (array_key_exists('type', $url_array)){
-            $query->AndClause(['type','=',$url_array['type']]);
+            $query->AND_(['type','=',$url_array['type']]);
         }
 
         $query->Limit(1); 

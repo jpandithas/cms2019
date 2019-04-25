@@ -99,7 +99,7 @@ a.lang-current:hover {
 /* CONTENT AREA */ 
 
 .content-wrapper {  
-    min-height: 71vh;
+    min-height: 75vh;
     display: flex; 
     flex-wrap:wrap;  
 }
@@ -349,8 +349,26 @@ input:checked ~ #menu {
     .footer-inner-left{
         border: 0px; 
     }
+
     .head-navi{
+        padding: 0; 
+    }
+
+    .head-navi a{
         display: none;
+    }
+
+    .language-bar{
+        width: 100%; 
+    }
+    a.lang {
+        display: block; 
+        float: right;
+    }
+    a.lang-current {
+        display: block; 
+        float: right; 
+
     }
     .logo{
         display: none; 

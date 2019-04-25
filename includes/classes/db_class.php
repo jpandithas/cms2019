@@ -35,7 +35,7 @@ class DB
     {
         try 
         {
-           $conn_string = DB_ENGINE.':host='.DB_HOST.';dbname='.DB_NAME; 
+           $conn_string = DB_ENGINE.':host='.DB_HOST.';dbname='.DB_NAME.";charset=utf8"; 
            $dbc = new PDO($conn_string,DB_USER,DB_PASSWORD);
         } 
         catch (PDOException $Exception) 

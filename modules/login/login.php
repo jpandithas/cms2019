@@ -28,7 +28,7 @@ function Login()
             $_SESSION['username'] = $username; 
             
             $query = new Query(new DB()); 
-            $query->SetTableName('user');
+            $query->From('user');
             $query->Select(['role']);
             $query->Where(['uid','=',$uid]);
             $query->Limit(1); 

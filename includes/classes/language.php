@@ -12,8 +12,9 @@ class Language
     public static function GetLocalesArray()
     {
         $query= new Query(new DB());
-        $query->SetTableName('languages');
+       
         $query->Select(['lang_descriptor','lang_display_name','lang_native_name']);
+        $query->From('languages');
         $query->Where(['lang_status','=','1']);
         $query->Run(); 
 
@@ -30,8 +31,8 @@ class Language
     public static function GetDefaultLang()
     {
         $query= new Query(new DB());
-        $query->SetTableName('languages');
         $query->Select(['lang_descriptor']);
+        $query->From('languages');
         $query->Where(['lang_default','=','1']);
         $query->Limit(1);
         $query->Run(); 
@@ -52,7 +53,7 @@ class Language
         if (empty($locale)) return false; 
 
         $query= new Query(new DB());
-        $query->SetTableName('languages');
+        $query->From('languages');
         $query->Select(['langid']); 
         $query->Where(['lang_descriptor','=',strtolower($locale)]); 
         $query->Limit(1);
@@ -100,13 +101,13 @@ class Language
 
     public static function GetModuleTranslations(){
         $query= new Query(new DB()); 
-        $query->SetTableName('module_translations'); 
+        $query->From('module_translations'); 
         $query->Select(['module_translations.routeid', 
                         'module_translations.mod_display_name',
                         'module_translations.lang', 
                         'routes.mod_display_name']); 
         $query->Inner_Join('routes');
-        $query->On_(['routes.routeid','=','module_translations.routeid']);
+        $query->ON_(['routes.routeid','=','module_translations.routeid']);
         $query->Run();
 
         $result= $query->GetReturnedRows();

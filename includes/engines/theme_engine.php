@@ -9,7 +9,7 @@ function Logo()
 function Site_Name()
 {
     $query = new Query(new DB());
-    $query->SetTableName('variables');
+    $query->From('variables');
     $query->Select(['value']); 
     $query->Where(['name','=','site_name']); 
     $query->Limit(1);

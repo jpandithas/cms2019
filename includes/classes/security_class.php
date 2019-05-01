@@ -39,7 +39,7 @@ class Security
     public static function Authenticate($usenrame, $password)
     {   
         $query = new Query(new DB()); 
-        $query->SetTableName('user'); 
+        $query->From('user'); 
         $query->Select(['uid']); 
         $query->Where(['username','=',$usenrame]);
         $query->AND_(['password','=',self::Password($password)]); 
@@ -90,7 +90,7 @@ class Security
 
         $query = new Query(new DB()); 
 
-        $query->SetTableName('routes'); 
+        $query->From('routes'); 
         $query->Select(['routeid']); 
         $query->Where(['mod_name','=',$mod_name]);
         $query->Limit(1); 
@@ -104,7 +104,7 @@ class Security
         $query = null; 
         $query = new Query(new DB()); 
 
-        $query->SetTableName('permissions'); 
+        $query->From('permissions'); 
         $query->Select(['allowed']); 
         $query->Where(['routeid','=',$rid]);
         $query->AND_(['roleid','=',$_SESSION['role']]);
@@ -129,7 +129,7 @@ class Security
     public static function Get_Users_Array()
     {
         $query= new Query(new DB()); 
-        $query->SetTableName('user'); 
+        $query->From('user'); 
         $query->Select(['uid','username','role']); 
         $query->OrderBy(['role'],"DESC");
         $query->Run(); 
@@ -158,7 +158,7 @@ class Security
     public static function Get_Roles_Array($remove_anoymous=false)
     {
         $query= new Query(new DB()); 
-        $query->SetTableName('roles'); 
+        $query->From('roles'); 
         $query->Select(['roleid','role_name','role_display_name','role_description']); 
         if ($remove_anoymous){
             $query->Where(['roleid','>','1']); 
@@ -193,7 +193,7 @@ class Security
 
         $query= new Query(new DB()); 
 
-        $query->SetTableName('user');
+        $query->From('user');
         $query->Select(['uid','username','role']);
         $query->Where(['uid','=',$uid]);  
         $query->Limit(1);

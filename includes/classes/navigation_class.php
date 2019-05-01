@@ -34,7 +34,7 @@ class Main_Navigation {
        if (LOCALES_ENABLED) tt_register(Language::GetModuleTranslations());
 
         $query = new Query(new DB()); 
-        $query->SetTableName("routes"); 
+        $query->From("routes"); 
         $query->Select(['routeid','action','type','mod_display_name','mod_name']); 
         $query->Where(['status','=','1']);
         $query->AND_(['visible','=','1']); 

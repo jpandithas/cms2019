@@ -12,8 +12,9 @@ function add_user()
         }
 
         $query = new Query(new DB()); 
-        $query->SetTableName("user"); 
-        $query->Select(['uid']); 
+        
+        $query->Select(['uid']);
+        $query->From("user"); 
         $query->Where(['username','=',$_POST['username']]); 
         $query->Run(); 
         $result = $query->GetReturnedRows();
@@ -48,8 +49,8 @@ function add_user()
         $role= $_POST['role'];
 
         $query= new Query(new DB()); 
-        $query->SetTableName('user');
         $query->Insert([null,$username,$password,$role]);
+        $query->Into_Table('user');
         $query->Run(); 
         $new_user_id= $query->GetLastInsertId(); 
 
@@ -73,7 +74,7 @@ function Add_User_Form()
     $form->webform_password_textbox("Retype Password","password2","Type the password again..",true); 
     
     $query = new Query(new DB()); 
-    $query->SetTableName("roles"); 
+    $query->From("roles"); 
     $query->Select(['role_display_name','roleid']); 
     $query->Where(['roleid','>','1']); 
     $query->OrderBy(['roleid'],'DESC'); 

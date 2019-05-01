@@ -40,13 +40,35 @@ class Query
      * @param string $table_name
      * @return Query
      */
-    public function SetTableName($table_name)
+    public function From($table_name)
     {
         if (!is_string($table_name)) return false; 
         $this->table = $table_name;
         return $this;
     }
 
+    /**
+     * Into Function (Alias of: 'From' Function)
+     *
+     * @see From Function
+     * @param string $table_name
+     * @return Query
+     */
+    public function Into_Table($table_name){
+       
+        return $this->From($table_name); 
+    }
+
+    /**
+     * Table Function (Alias of: 'From' Function)
+     *
+     * @param string  $table_name
+     * @return Query
+     */
+    public function Table($table_name)
+    {
+        return $this->From($table_name); 
+    }
     /**
      * Insert SQL statement 
      *
@@ -141,7 +163,7 @@ class Query
         $count = 0;
         foreach ($fields_array as $field) 
         {
-            $this->sql .= $field;
+            $this->sql.= $field;
             if ($count < count($fields_array)-1)
             {
                 $this->sql .=",";
@@ -271,7 +293,7 @@ class Query
      * @param array $expression
      * @return void
      */
-    public function On_(array $expression)
+    public function ON_(array $expression)
     {
         if (!is_array($expression) or count($expression)==0) return false;
         if (count($expression) != 3) return false;

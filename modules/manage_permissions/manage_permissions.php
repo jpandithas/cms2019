@@ -6,7 +6,7 @@ function manage_permissions()
 Append_Title("Manage Permissions"); 
 
 $query= new Query(new DB()); 
-$query->SetTableName('roles'); 
+$query->From('roles'); 
 $query->Select(['roleid','role_display_name']); 
 $query->OrderBy(['roleid']); 
 $query->Run(); 
@@ -62,7 +62,7 @@ function role_selection_form(array $roles)
  */
 function permissions_table($role){
     $query = new Query(new DB()); 
-    $query->SetTableName('permissions'); 
+    $query->From('permissions'); 
     $query->Select(['permid','routeid','allowed']); 
     $query->Where(['roleid','=',$role]); 
     $query->OrderBy(['roleid']);
@@ -71,7 +71,7 @@ function permissions_table($role){
    // var_dump($permissions); 
 
     $query= new Query(new DB()); 
-    $query->SetTableName("routes"); 
+    $query->From("routes"); 
     $query->Select(['routeid','mod_display_name']);
     $query->Run(); 
     $routes= $query->GetReturnedRows();
@@ -79,7 +79,7 @@ function permissions_table($role){
     //var_dump($routes); 
 
     $query= new Query(new DB()); 
-    $query->SetTableName("roles"); 
+    $query->From("roles"); 
     $query->Select(['role_display_name']);
     $query->Where(['roleid','=',$role]);  
     $query->Run(); 
@@ -123,7 +123,7 @@ function permissions_table($role){
 function edit_permission_form($id)
 {
     $query= new Query(new DB()); 
-    $query->SetTableName("permissions"); 
+    $query->From("permissions"); 
     $query->Select(['roleid','routeid','allowed']);
     $query->Where(['permid','=',$id]); 
     $query->Run(); 
@@ -133,7 +133,7 @@ function edit_permission_form($id)
  
     $form= new Webform('edit-permissions-form'); 
     $query= new Query(new DB()); 
-    $query->SetTableName('roles'); 
+    $query->From('roles'); 
     $query->Select(['role_display_name']); 
     $query->Where(['roleid','=',$permissions['roleid']]);
     $query->Run(); 
@@ -143,7 +143,7 @@ function edit_permission_form($id)
     $form->webform_textbox("Role",'role',$role_name,null,false,true);
 
     $query= new Query(new DB()); 
-    $query->SetTableName('routes'); 
+    $query->From('routes'); 
     $query->Select(['mod_display_name']); 
     $query->Where(['routeid','=',$permissions['routeid']]);
     $query->Run(); 

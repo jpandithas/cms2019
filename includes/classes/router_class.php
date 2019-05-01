@@ -38,7 +38,7 @@ class Router
         if (count($url_array) == 0) return false; 
 
         $query = new Query(new DB()); 
-        $query->SetTableName('routes');
+        $query->From('routes');
         $query->Select(['mod_name']);
         $query->Where(["action","=",$url_array['action']]);
 
@@ -64,7 +64,7 @@ class Router
     public static function ModuleNameExists($mod_name){
         $query = new Query(new DB());
 
-        $query->SetTableName("routes");
+        $query->From("routes");
         $query->Select(['mod_name']);
         $query->Where(['mod_name','=',$mod_name]);
         $query->Run();
@@ -85,7 +85,7 @@ class Router
         if (empty($mod_name) or !is_string($mod_name)) return false; 
 
         $query = new Query(new DB()); 
-        $query->SetTableName("routes");
+        $query->From("routes");
         $query->Select(['status','system']);
         $query->Where(['mod_name','=',$mod_name]);
         $query->Run(); 

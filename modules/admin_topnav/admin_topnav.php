@@ -11,7 +11,7 @@ function admin_topnav()
 function Show_links_table()
 {
     $query = new Query(new DB()); 
-    $query->SetTableName("topnav"); 
+    $query->From("topnav"); 
     $query->Select(['linkid','link_path','link_text','weight']); 
     $query->OrderBy(['weight']); 
     $query->Run(); 

@@ -13,7 +13,7 @@ function boot()
 
     Autoload_System_Translations();
    
-   /************ Write Below This Line ********************************************************/
+   /************ WRITE BELOW THIS LINE ********************************************************/
     
     #Test the DB connection 
     $db= new DB();
@@ -28,9 +28,8 @@ function boot()
     #Check if user is Anonymous 
     CheckAnonymousUser(); 
     
-    
 
-    $url= new URL();
+    //$url= new URL();
     //var_dump($url->URLtoPath());
     //var_dump($url->GetURLArray()); 
     
@@ -50,7 +49,7 @@ function boot()
 
     #END BOOSTSTRAP 
 
-    var_dump(memory_get_usage(false)/1024);
+    //var_dump(memory_get_usage(false)/1024);
 }
 
  /**

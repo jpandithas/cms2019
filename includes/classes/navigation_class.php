@@ -31,7 +31,10 @@ class Main_Navigation {
     public static function Render_Menu()
     {
     
-       if (LOCALES_ENABLED) tt_register(Language::GetModuleTranslations());
+       if (LOCALES_ENABLED) {
+           tt_register(Language::GetModuleTranslations());
+           $path_prefix= Language::GetCurrentLocale();
+       }
 
         $query = new Query(new DB()); 
         $query->Table("routes"); 
@@ -54,7 +57,12 @@ class Main_Navigation {
             if (Security::UserHasPerMission($row['mod_name'])==false) continue; 
         
             $html.="<li id='nav-item' class='nav'>";
-            $html.="<a class='nav-link' href=".CMS_BASE_URL."?q=".$row['action'];
+
+            $html.="<a class='nav-link' href=".CMS_BASE_URL."?q=";
+            if (LOCALES_ENABLED) {
+                $html.= $path_prefix."/"; 
+            }
+            $html.=$row['action'];
             if (!empty($row['type'])) {
                 $html .= "/".$row['type'];
             }

@@ -3,7 +3,10 @@
 
 function Logo()
 {
-    print("Logo");
+    $theme= Theme::GetActiveTheme(); 
+    $html= "<img class='site-logo' src='themes".DIRECTORY_SEPARATOR.$theme.DIRECTORY_SEPARATOR."P_logo_w.png' />"; 
+   
+    print($html); 
 }
 
 function Site_Name()

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 25, 2019 at 10:17 AM
+-- Generation Time: May 03, 2019 at 08:32 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `module_translations` (
   `mod_desc` varchar(255) NOT NULL,
   `lang` varchar(255) NOT NULL,
   PRIMARY KEY (`trid`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `module_translations`
@@ -73,7 +73,9 @@ INSERT INTO `module_translations` (`trid`, `routeid`, `mod_display_name`, `mod_d
 (3, 4, 'Αρχική', 'Αρχική Σελίδα', 'el'),
 (4, 5, 'Έξοδος', 'Έξοδος από το σύστημα', 'el'),
 (5, 7, 'Διαχείρηση Προνομίων', 'Διαχείριση Προωομίωω των Κατηγοριών των χρηστών', 'el'),
-(6, 8, 'Επεξεργασία Χρήστη', 'Επεξεργασία Χρηστών', 'el');
+(6, 8, 'Επεξεργασία Χρήστη', 'Επεξεργασία Χρηστών', 'el'),
+(7, 3, '404', 'Η σελίδα δεν βρέθηκε', 'el'),
+(8, 6, 'Απαγόρευση Πρόσβασης', 'Δεν Επιιτρέπεται', 'el');
 
 -- --------------------------------------------------------
 

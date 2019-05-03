@@ -10,7 +10,7 @@ class Theme
     public static function GetActiveTheme()
     {
         $query = new Query(new DB()); 
-        $query->From("theme_registry"); 
+        $query->Table("theme_registry"); 
         $query->Select(['theme_name']);
         $query->Where(['status','=','1']); 
         $query->Limit(1); 

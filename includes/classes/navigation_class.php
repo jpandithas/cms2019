@@ -34,15 +34,14 @@ class Main_Navigation {
        if (LOCALES_ENABLED) tt_register(Language::GetModuleTranslations());
 
         $query = new Query(new DB()); 
-        $query->From("routes"); 
+        $query->Table("routes"); 
         $query->Select(['routeid','action','type','mod_display_name','mod_name']); 
         $query->Where(['status','=','1']);
         $query->AND_(['visible','=','1']); 
         $query->OrderBy(['mod_display_name']); 
         $query->Run(); 
-
-        $result = $query->GetReturnedRows(); 
-        
+    
+        $result = $query->GetReturnedRows(); ; 
         
         $html = "<input type='checkbox' id='menu'>";
         $html .= "<label for='menu'><b>".tt('Navigation')."</b></label>";

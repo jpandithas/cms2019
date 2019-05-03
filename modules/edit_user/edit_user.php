@@ -60,7 +60,7 @@ function edit_user_form()
      * Get the roles of the user first to fill in the webform
      */
     $query= new Query(new DB()); 
-    $query->From('roles');
+    $query->Table('roles');
     $query->Select(['role_display_name']);
     $query->Where(['roleid','=',$user_array['role']]); 
     $query->Run();
@@ -76,7 +76,7 @@ function edit_user_form()
      * Do not get the Anonymous user
      */
     $query= new Query(new DB());
-    $query->From('roles');
+    $query->Table('roles');
     $query->Select(['roleid','role_display_name']);
     $query->Where(['roleid','>',1]);
     $query->AND_(['roleid','!=',$user_array['role']]);

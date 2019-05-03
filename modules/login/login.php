@@ -8,7 +8,7 @@ function Login()
 {
     include('login.lang.php'); 
 
-    Append_Title("Login");
+    Append_Title(tt("Login"));
     Append_Content("<h2> ".tt('Login Page')." </h2>"); 
 
     if (isset($_POST['submit']) and ($_POST['submit']==tt('Login')))
@@ -28,7 +28,8 @@ function Login()
             $_SESSION['username'] = $username; 
             
             $query = new Query(new DB()); 
-            $query->From('user');
+
+            $query->Table('user');
             $query->Select(['role']);
             $query->Where(['uid','=',$uid]);
             $query->Limit(1); 
@@ -58,7 +59,6 @@ function Login()
 
 function login_form(){
     
-
     $form = new Webform("login-form"); 
     $form->webform_textbox(tt("Username"),"username",null,tt('Enter your username hare..'),true);
     $form->webform_password_textbox(tt("Password"),"password",tt('Enter your password here..'),TRUE); 

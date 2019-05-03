@@ -21,6 +21,7 @@ class Query
     protected $sql;
     protected $params = array();
     protected $errorCode;
+    protected $statement_error; 
     protected $returned_rows;
     protected $lastInsertId;
 
@@ -32,43 +33,25 @@ class Query
     public function __destruct()
     {
         $this->db= null; 
+        $this->dbo= null;
     }
     
-    /**
-     * Set the target table for the queries 
-     *
-     * @param string $table_name
-     * @return Query
-     */
-    public function From($table_name)
-    {
-        if (!is_string($table_name)) return false; 
-        $this->table = $table_name;
-        return $this;
-    }
 
     /**
-     * Into Function (Alias of: 'From' Function)
+     * Set the target table for the queries
      *
-     * @see From Function
      * @param string $table_name
-     * @return Query
-     */
-    public function Into_Table($table_name){
-       
-        return $this->From($table_name); 
-    }
-
-    /**
-     * Table Function (Alias of: 'From' Function)
-     *
-     * @param string  $table_name
      * @return Query
      */
     public function Table($table_name)
     {
-        return $this->From($table_name); 
+        if (!is_string($table_name) or empty($table_name)) return false; 
+        $this->table = $table_name;
+        return $this;
     }
+
+
+
     /**
      * Insert SQL statement 
      *
@@ -122,7 +105,7 @@ class Query
     $count = 0;
     foreach ($fields_values as $field => $value) 
     {
-        $this->sql .= "{$field} = ? ";
+        $this->sql .= "`{$field}` = ? ";
         if ($count < (count($fields_values)-1))
         {
            $this->sql .= ", ";
@@ -187,7 +170,7 @@ class Query
         if (count($where_clause) != 3) return false;
         if (!isset($this->sql)) return false;
 
-        $this->sql .= "WHERE ".$where_clause[0]." ".$where_clause[1]." ?";
+        $this->sql .= "WHERE {$where_clause[0]} {$where_clause[1]} ?";
         array_push($this->params, $where_clause[2]);
         return $this;
     }
@@ -219,8 +202,10 @@ class Query
     {
         if (!is_array($clause) or count($clause) != 3) return false;
         if (!isset($this->sql)) return false;
+
         $this->sql .=" OR {$clause[0]} {$clause[1]} ?";
         array_push($this->params,$clause[2]);
+        
         return $this;
     }
 
@@ -229,7 +214,6 @@ class Query
      *
      * @param integer $rows
      * @param integer $offset
-     *
      * @return Query
      */
     public function Limit($rows, $offset=null)
@@ -258,6 +242,7 @@ class Query
        if (empty($fields) or !is_array($fields)) return false;
        if (!in_array(strtoupper($order),array("ASC","DESC"))) return false;
        if (!isset($this->sql)) return false;
+       
        $this->sql .= " ORDER BY ";
         $count = 0;
         foreach ($fields as $field) 
@@ -315,7 +300,9 @@ class Query
         $result = $stmt->execute($this->params);
         if ($result==false)
         {
-            $this->errorCode = $dbo->errorCode();
+            $this->errorCode= $dbo->errorCode();
+            $this->statement_error= $stmt->errorCode(); 
+    
         }
         $this->returned_rows = $stmt->FetchAll();
         $this->lastInsertId = $dbo->lastInsertId();
@@ -325,15 +312,29 @@ class Query
     /**
      * Return the error code if a query fails
      *
-     * @return string | false
+     * @return string|false
      */
-    public function GetErrorCode()
+    public function GetPBOErrorCode()
     {
         if (!isset($this->errorCode))
         {
             return false;
         }
         return $this->errorCode;
+    }
+
+    /**
+     * Gets the PDOStatement Error Code
+     *
+     * @return string|false
+     */
+    public function GetQueryErrorCode()
+    {
+        if (!isset($this->statement_error))
+        {
+            return false;
+        }
+        return $this->statement_error;
     }
     
     /**
@@ -371,7 +372,6 @@ class Query
     public function getSQL()
     {
         echo $this->sql;
-        var_dump($this->params);
     }
 
 }
